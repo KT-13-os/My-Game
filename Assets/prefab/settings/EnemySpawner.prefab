@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4434159524395639753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3479913872250150040}
+  - component: {fileID: 5473819690519151261}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Spawner
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3479913872250150040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4434159524395639753}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5473819690519151261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4434159524395639753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b573844d44763c044b06b7413058e02d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Debug: 0
+  _enemysManager: {fileID: 11400000, guid: 5a6d6c1cf5c11f84b88a52614a08737d, type: 2}
+  _difficulty: {fileID: 11400000, guid: 892370a3ba652e24daaadcc1e9f0049a, type: 2}
+  _gamemanager: {fileID: 0}
+  _player: {fileID: 0}
+  _enemy: []
+  _TESTenemy:
+  - {fileID: 1241645370423398398, guid: dfc88be562370be478408407c3934d2c, type: 3}
+  - {fileID: 1241645370423398398, guid: dfc88be562370be478408407c3934d2c, type: 3}
+  - {fileID: 1241645370423398398, guid: dfc88be562370be478408407c3934d2c, type: 3}
+  - {fileID: 1241645370423398398, guid: dfc88be562370be478408407c3934d2c, type: 3}
+  - {fileID: 1241645370423398398, guid: dfc88be562370be478408407c3934d2c, type: 3}
+  _EASYenemy:
+  - {fileID: 1241645370423398398, guid: dfc88be562370be478408407c3934d2c, type: 3}
+  - {fileID: 6073284630139229664, guid: 640cbd0786332a342b1912e0ddc9ac1e, type: 3}
+  - {fileID: 1241645370423398398, guid: dfc88be562370be478408407c3934d2c, type: 3}
+  - {fileID: 3444935598661578785, guid: da93a0742c92c2b4094a05ea99122da9, type: 3}
+  - {fileID: 1059702115453090806, guid: 4a3e309088219744abf3988290376fe5, type: 3}
+  - {fileID: 6571139903605300728, guid: 844d2b074d2053d48b9df8ba73384c95, type: 3}
+  - {fileID: 1400635417759200988, guid: 1ce44dd2b5364ab40a6703d628eb8042, type: 3}
+  - {fileID: 926830750920014262, guid: 3f9d9aa66b8d58d4283f3c4d941fc65a, type: 3}
+  - {fileID: 8149700441616953550, guid: 4b25545527b67f746a4a04fecee51225, type: 3}
+  - {fileID: 7137083647730737071, guid: 44c6eeed6f07b974194002a85ba864c2, type: 3}
+  - {fileID: 8599571938038498855, guid: e00ebc66372087343ab0aec5f7ebff19, type: 3}
+  - {fileID: 6939178998076054572, guid: c3b585e734119004ead01764c9bb826d, type: 3}
+  - {fileID: 7049099294388513491, guid: f58d49d83b9e86c4cae471a25983dbab, type: 3}
+  - {fileID: 6660391015220511851, guid: 463f554db24e14a48a2666ac74e95573, type: 3}
+  - {fileID: 4783141679106761372, guid: 5d074049e8baafc4daec3171c45783b5, type: 3}
+  - {fileID: 7481621445009695502, guid: 36dd87505dd80104f8ce323b1d7c43af, type: 3}
+  _NORMALenemy:
+  - {fileID: 1241645370423398398, guid: 5aa46a05048d04846904375abe1b231b, type: 3}
+  - {fileID: 6073284630139229664, guid: 786a458baea9f2d4c849dc49762ea87b, type: 3}
+  - {fileID: 1241645370423398398, guid: 5aa46a05048d04846904375abe1b231b, type: 3}
+  - {fileID: 3444935598661578785, guid: f7e308d4eb4a5a74fba5ad93a1b631c1, type: 3}
+  - {fileID: 1059702115453090806, guid: 960a3630ab3f58a449a7de94ca210a8c, type: 3}
+  - {fileID: 6571139903605300728, guid: dd0c6deddabb936449308c2851b239ec, type: 3}
+  - {fileID: 1400635417759200988, guid: eab10adf6021e91419b95d69880025fa, type: 3}
+  - {fileID: 926830750920014262, guid: 3348bdd3f3230f340b1384db3defe5e0, type: 3}
+  - {fileID: 8149700441616953550, guid: 4b25545527b67f746a4a04fecee51225, type: 3}
+  - {fileID: 7137083647730737071, guid: a65019283805c5747a04829dfdc61607, type: 3}
+  - {fileID: 8599571938038498855, guid: d8c184eb5a35d044a9b9b1cb3873f6e6, type: 3}
+  - {fileID: 6939178998076054572, guid: 6faa131af5344344b943d85628c81bcd, type: 3}
+  - {fileID: 7049099294388513491, guid: 527da23336e152e40821d09c76956db2, type: 3}
+  - {fileID: 6660391015220511851, guid: c34440f3083365744a5925f49ea1d4d8, type: 3}
+  - {fileID: 4783141679106761372, guid: ccf6347d637e7f6478f9b625e84f27b2, type: 3}
+  - {fileID: 7481621445009695502, guid: 05d718f4ea47fa94092fc33167b6c89e, type: 3}
+  _HARDenemy:
+  - {fileID: 1241645370423398398, guid: 6c20eaa6fb2c5944096925e7d70a784a, type: 3}
+  - {fileID: 6073284630139229664, guid: 0e9d7641f6444ed4ba214c6f3e29e561, type: 3}
+  - {fileID: 1241645370423398398, guid: 6c20eaa6fb2c5944096925e7d70a784a, type: 3}
+  - {fileID: 3444935598661578785, guid: 2b4603e99be47f149a475a01119db943, type: 3}
+  - {fileID: 1059702115453090806, guid: 35c7a5d070fc0024a8d473a4fffbea71, type: 3}
+  - {fileID: 6571139903605300728, guid: eb20c40668ffd2c46aecd62ba81e54e8, type: 3}
+  - {fileID: 1400635417759200988, guid: 389da3a39fbb923419f887b4a15494c3, type: 3}
+  - {fileID: 926830750920014262, guid: 41d30966410ed96408810e5d5354ba1b, type: 3}
+  - {fileID: 8149700441616953550, guid: 4b25545527b67f746a4a04fecee51225, type: 3}
+  - {fileID: 7137083647730737071, guid: 7cefdfd41906f1847951ab81b668ee66, type: 3}
+  - {fileID: 8599571938038498855, guid: 01c9b97499b376a41bb7c235d4491202, type: 3}
+  - {fileID: 6939178998076054572, guid: d183c20a72674e84a92e37aebb3e2531, type: 3}
+  - {fileID: 7049099294388513491, guid: 6ed8d111c59cc0542a3bab62b462f7af, type: 3}
+  - {fileID: 6660391015220511851, guid: adf6f2bdd9c0b2242bc781ba2ec777d2, type: 3}
+  - {fileID: 4783141679106761372, guid: 3437d011c6fc0b6409397a0091f46127, type: 3}
+  - {fileID: 7481621445009695502, guid: 8d2a9c9196741394fba4dfc50fd76013, type: 3}
+  _EASYspawnTimes:
+  - 4
+  - 3
+  - 3
+  - 4
+  - 5
+  - 5
+  - 7
+  - 6
+  - 5
+  - 5
+  - 6
+  - 6
+  - 5
+  - 5
+  - 5
+  - 5
+  _NORMALspawnTimes:
+  - 3
+  - 3
+  - 3
+  - 4
+  - 4
+  - 5
+  - 6
+  - 5
+  - 5
+  - 4
+  - 6
+  - 6
+  - 5
+  - 4
+  - 5
+  - 5
+  _HARDspawnTimes:
+  - 3
+  - 3
+  - 3
+  - 4
+  - 4
+  - 5
+  - 6
+  - 5
+  - 4
+  - 3
+  - 6
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  _Boss: {fileID: 0}
+  slider: {fileID: 0}
+  Number: 8
+  _inputfield: {fileID: 0}
+  _tutorial: 0
