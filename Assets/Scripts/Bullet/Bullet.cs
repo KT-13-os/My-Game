@@ -42,6 +42,7 @@ public class Bullet : MonoBehaviour
     private Sprite _damageSprite;
     protected bool StopMove = false;
     private GameObject Summoner;
+    private int _number;
     private MoveMode _moveMode;
     enum MoveMode
     {
@@ -60,6 +61,7 @@ public class Bullet : MonoBehaviour
         {
             instance = this;
         }
+        _number=100;
     }
     void Start()
     {
@@ -274,32 +276,39 @@ public class Bullet : MonoBehaviour
         if (A == 3)
         {
             _moveMode = MoveMode.M1;
+            StopMove = false;
         }
         else if (A == 1)
         {
             _moveMode = MoveMode.M3;
+            StopMove = false;
         }
         else if (A == 2)
         {
             _Mspeed = _speed;
             _moveMode = MoveMode.M2;
+            StopMove = false;
         }
         else if (A == 4)
         {
             _moveVec = new Vector2(Random.Range(-8.6f, 4f), Random.Range(-4.5f, 1f));
             _moveMode = MoveMode.M;
+            StopMove = false;
         }
         else if (A == 5)
         {
             _moveMode = MoveMode.M4;
+            StopMove = false;
         }
         else if(A==6)
         {
             _moveMode=MoveMode.M5;
+            StopMove = false;
         }
         else if(A==7)
         {
             _moveMode=MoveMode.M6;
+            StopMove = false;
         }
         else if (A == 0)
         {
@@ -349,5 +358,13 @@ public class Bullet : MonoBehaviour
         GameObject powerItemObj = Instantiate(_Item[0]);
         powerItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));
     }
+    }
+public void SetNumber(int number)
+    {
+        _number=number;
+    }
+    public int GetNumber()
+    {
+        return _number;
     }
 }
