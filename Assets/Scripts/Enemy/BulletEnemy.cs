@@ -244,7 +244,7 @@ public class BulletEnemy : Enemy
             Bullet shootbullet = bullet.GetComponent<Bullet>();
             shootbullet.Speed(_Pspeed);
             shootbullet.KasokuCahange(-0.01f);
-            shootbullet.MoveChange(1);
+            shootbullet.MoveChange(1,this.gameObject);
             bullet.transform.position = transform.position;
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
@@ -264,7 +264,7 @@ public class BulletEnemy : Enemy
         Bullet shootbullet = bullet.GetComponent<Bullet>();
         shootbullet.Speed(_Pspeed);
         shootbullet.KasokuCahange(-0.01f);
-        shootbullet.MoveChange(1);
+        shootbullet.MoveChange(1,this.gameObject);
             bullet.transform.position = transform.position;
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
@@ -289,12 +289,12 @@ public class BulletEnemy : Enemy
         Bullet shootbullet = bulletObj.GetComponent<Bullet>();
         shootbullet.Speed(_Pspeed);
         shootbullet.KasokuCahange(-0.01f);
-        shootbullet.MoveChange(1);
+        shootbullet.MoveChange(1,this.gameObject);
         if (Sakuretu == true)
         {
         shootbullet.Speed(4);
         shootbullet.KasokuCahange(-0.01f);
-        shootbullet.MoveChange(1);
+        shootbullet.MoveChange(1,this.gameObject);
             shootbullet.BoundChange(false);
             BakuhatuBullet bakuhatuBullet = bulletObj.GetComponent<BakuhatuBullet>();
             bakuhatuBullet.ChangeCircleBuletNum(_SakuretuNum);
@@ -321,7 +321,7 @@ public class BulletEnemy : Enemy
         Bullet shootbullet = bulletObj.GetComponent<Bullet>();
         shootbullet.Speed(_Pspeed);
         shootbullet.KasokuCahange(-0.01f);
-        shootbullet.MoveChange(1);
+        shootbullet.MoveChange(1,this.gameObject);
         bulletObj.transform.position = transform.position;
         bulletObj.transform.eulerAngles = new Vector3(0f, 0f, -180f*i + _rotateZ);
         }
@@ -338,7 +338,7 @@ public class BulletEnemy : Enemy
         Bullet shootbullet = bullet.GetComponent<Bullet>();
             shootbullet.Speed(_Pspeed);
         shootbullet.KasokuCahange(-0.01f);
-        shootbullet.MoveChange(1);
+        shootbullet.MoveChange(1,this.gameObject);
             bullet.transform.position = transform.position;
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
@@ -362,7 +362,7 @@ public class BulletEnemy : Enemy
         Bullet shootbullet = bulletObj.GetComponent<Bullet>();
         shootbullet.Speed(_Pspeed);
         shootbullet.KasokuCahange(-0.01f);
-        shootbullet.MoveChange(1);
+        shootbullet.MoveChange(1,this.gameObject);
         bulletObj.transform.position = transform.position;
         Vector3 dir = _player.transform.position - transform.position;
         bulletObj.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
@@ -452,7 +452,7 @@ public class BulletEnemy : Enemy
             Bullet shootbullet = bullet.GetComponent<Bullet>();
             shootbullet.Speed(_Pspeed);
             shootbullet.KasokuCahange(-_Pspeed/3);
-            shootbullet.MoveChange(1);
+            shootbullet.MoveChange(1,this.gameObject);
             bullet.transform.position = transform.position;
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
@@ -468,7 +468,7 @@ public class BulletEnemy : Enemy
         Bullet shootbullet = bulletObj.GetComponent<Bullet>();
         shootbullet.Speed(1);
         shootbullet.KasokuCahange(-0.01f);
-        shootbullet.MoveChange(1);
+        shootbullet.MoveChange(1,this.gameObject);
         bulletObj.transform.position = transform.position;
         Vector3 dir = _player.transform.position - transform.position;
         bulletObj.transform.rotation = Quaternion.FromToRotation(transform.up, dir);

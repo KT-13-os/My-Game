@@ -93,7 +93,7 @@ public class middleboss : Enemy
             Bullet shootbullet = bullet.GetComponent<Bullet>();
             shootbullet.Speed(_Pspeed);
         shootbullet.KasokuCahange(-0.01f);
-        shootbullet.MoveChange(1);
+        shootbullet.MoveChange(1,this.gameObject);
             bullet.transform.position = transform.position;
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
@@ -128,12 +128,12 @@ public class middleboss : Enemy
             {
                 shootbullet.Speed(2);
         shootbullet.KasokuCahange(-0.01f);
-        shootbullet.MoveChange(1);
+        shootbullet.MoveChange(1,this.gameObject);
             }
             else if (_circle3Mode == 2)
             {
                 shootbullet.Speed(5);
-                shootbullet.MoveChange(1);
+                shootbullet.MoveChange(1,this.gameObject);
                 shootbullet.KasokuCahange(1);
             }
             bullet.transform.position = transform.position;

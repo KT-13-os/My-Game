@@ -268,7 +268,7 @@ public class BOSSA : BOSS
             float theta = angleRange / _circleBulletNum * i - Mathf.Deg2Rad * (90f + 360f / 2f);
             GameObject shootbullet = Instantiate(_bullet[3]);
             Bullet bullet = shootbullet.GetComponent<Bullet>();
-            bullet.MoveChange(3);
+            bullet.MoveChange(3,this.gameObject);
             bullet.KasokuCahange(A1BulletSpeed/2);
             bullet.Speed(A1BulletSpeed);
             shootbullet.transform.position = transform.position;
@@ -285,7 +285,7 @@ public class BOSSA : BOSS
         Bullet bullet = bulletObj.GetComponent<Bullet>();
         bullet.Speed(4);
         bullet.KasokuCahange(-0.5f);
-            bullet.MoveChange(1);
+            bullet.MoveChange(1,this.gameObject);
         bulletObj.transform.position = transform.position;
         Vector3 dir = _player.transform.position - transform.position;
         bulletObj.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
@@ -316,7 +316,7 @@ public class BOSSA : BOSS
         BakuhatuBullet bakuhatuBullet = bulletObj.GetComponent<BakuhatuBullet>();
         shootbullet.BoundChange(false);
         shootbullet.Speed(2);
-        shootbullet.MoveChange(3);
+        shootbullet.MoveChange(3,this.gameObject);
         shootbullet.KasokuCahange(0.1f);
         bakuhatuBullet.ChangeCircleBuletNum(4);
         bakuhatuBullet.ChangeBakuhatuTime(Random.Range(1,2.5f));
@@ -347,7 +347,7 @@ public class BOSSA : BOSS
         bullet.KasokuCahange(-0.1f);
         bullet.ChangeBoundNum(3);
         bullet.BoundChange(true);
-        bullet.MoveChange(4);
+        bullet.MoveChange(4,this.gameObject);
         boundObj.transform.position = transform.position;
         _bshootCount = 0;
         _a++;
@@ -390,13 +390,13 @@ public class BOSSA : BOSS
             {
                 shootbullet.KasokuCahange(-4);
                 shootbullet.Speed(6);
-                shootbullet.MoveChange(1);
+                shootbullet.MoveChange(1,this.gameObject);
             }
             else if (A == 11)
             {
                 shootbullet.KasokuCahange(1.5f);
                 shootbullet.Speed(3);
-                shootbullet.MoveChange(3);
+                shootbullet.MoveChange(3,this.gameObject);
             }
             bullet.transform.position = transform.position;
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
@@ -420,7 +420,7 @@ public class BOSSA : BOSS
             GameObject bullet = Instantiate(_bullet[12]);
             Bullet shootbullet = bullet.GetComponent<Bullet>();
             shootbullet.Speed(_A);
-            shootbullet.MoveChange(_B);
+            shootbullet.MoveChange(_B,this.gameObject);
             shootbullet.RcfSSTIME(_C);
             shootbullet.RcfStopTime(_D);
             bullet.transform.position = new Vector2(-3,0);
@@ -449,7 +449,7 @@ public class BOSSA : BOSS
             GameObject bullet = Instantiate(_bullet[13]);
             Bullet shootbullet = bullet.GetComponent<Bullet>();
             shootbullet.Speed(_E);
-            shootbullet.MoveChange(_F);
+            shootbullet.MoveChange(_F,this.gameObject);
             shootbullet.RcfSSTIME(_G);
             shootbullet.RcfStopTime(_H);
             bullet.transform.position = new Vector2(-3,0);

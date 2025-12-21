@@ -41,6 +41,7 @@ public class Bullet : MonoBehaviour
     private Sprite _defaultSprite;
     private Sprite _damageSprite;
     protected bool StopMove = false;
+    private GameObject Summoner;
     private MoveMode _moveMode;
     enum MoveMode
     {
@@ -50,6 +51,8 @@ public class Bullet : MonoBehaviour
         M2,
         M3,
         M4,
+        M5,
+        M6,
     }
     public void Awake()
     {
@@ -105,6 +108,8 @@ public class Bullet : MonoBehaviour
             case MoveMode.M2: Move2(); break;
             case MoveMode.M3: Move3(); break;
             case MoveMode.M4:RETURN();break;
+            case MoveMode.M5:Move5();break;
+            case MoveMode.M6:Move6();break;
         }
     }
     //ローカル座標上方向に_speed分進む
@@ -163,6 +168,16 @@ public class Bullet : MonoBehaviour
         {
             _speed = -_OLDspeed;
         }
+    }
+    private void Move5()
+    {
+        Move1();
+        transform.RotateAround(Summoner.transform.position,Vector3.forward,40*Time.deltaTime);
+    }
+    private void Move6()
+    {
+        Move1();
+        transform.RotateAround(Summoner.transform.position,Vector3.back,40*Time.deltaTime);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -254,7 +269,7 @@ public class Bullet : MonoBehaviour
     {
         _boundCountNum = BoundCount;
     }
-    public void MoveChange(int A)
+    public void MoveChange(int A,GameObject _gameObject)
     {
         if (A == 3)
         {
@@ -278,10 +293,19 @@ public class Bullet : MonoBehaviour
         {
             _moveMode = MoveMode.M4;
         }
+        else if(A==6)
+        {
+            _moveMode=MoveMode.M5;
+        }
+        else if(A==7)
+        {
+            _moveMode=MoveMode.M6;
+        }
         else if (A == 0)
         {
             StopMove = true;
         }
+        Summoner=_gameObject;
     }
     public void RcfSSTIME(float a)
     {

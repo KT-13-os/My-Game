@@ -54,7 +54,7 @@ public class BakuhatuBullet : MonoBehaviour
             Bullet bullet = shootbullet.GetComponent<Bullet>();
             bullet.Speed(2);
             bullet.KasokuCahange(0.5f);
-            bullet.MoveChange(1);
+            bullet.MoveChange(1,this.gameObject);
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             shootbullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
         }
@@ -80,7 +80,7 @@ public class BakuhatuBullet : MonoBehaviour
             Bullet bullet = shootbullet.GetComponent<Bullet>();
             bullet.Speed(2);
             bullet.KasokuCahange(0.5f);
-            bullet.MoveChange(1);
+            bullet.MoveChange(1,this.gameObject);
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             shootbullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
         }

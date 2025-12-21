@@ -171,7 +171,7 @@ public class PlayerScripts : MonoBehaviour
         GameObject bulletObj = Instantiate(_bullet[0]);
         Bullet bullet = bulletObj.GetComponent<Bullet>();
         bullet.Speed(15);
-        bullet.MoveChange(3);
+        bullet.MoveChange(3,this.gameObject);
         bulletObj.transform.position = transform.position + new Vector3(0f, transform.lossyScale.y, 0f);
         _shootCount = 0.0f;
     }

@@ -184,7 +184,7 @@ public class TESTBOSS : BOSS
             GameObject bullet = Instantiate(_bullet[0]);
             Bullet shootbullet = bullet.GetComponent<Bullet>();
             shootbullet.Speed(A);
-            shootbullet.MoveChange(B);
+            shootbullet.MoveChange(B,this.gameObject);
             shootbullet.RcfSSTIME(C);
             shootbullet.RcfStopTime(D);
             bullet.transform.position = transform.position;
@@ -213,7 +213,7 @@ public class TESTBOSS : BOSS
             GameObject bullet = Instantiate(_bullet[1]);
             Bullet shootbullet = bullet.GetComponent<Bullet>();
             shootbullet.Speed(E);
-            shootbullet.MoveChange(F);
+            shootbullet.MoveChange(F,this.gameObject);
             shootbullet.RcfSSTIME(G);
             shootbullet.RcfStopTime(H);
             bullet.transform.position = transform.position;
