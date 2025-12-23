@@ -800,6 +800,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &713825336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 713825337}
+  m_Layer: 0
+  m_Name: TARGETobject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &713825337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713825336}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &884342014 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6705583220904006294, guid: 9ea7eaa169568d9459a3be30f2ede715, type: 3}
@@ -1148,6 +1179,7 @@ MonoBehaviour:
   _bullet:
   - {fileID: 6274632669645906559, guid: 04e5fadfb1876a3409c0851f52910c6d, type: 3}
   - {fileID: 6274632669645906559, guid: 6d0e64dcc2e05764289ea6eacca4e35d, type: 3}
+  - {fileID: 3338375639557933969, guid: b5075ca4b531d9447bfaf47856e67540, type: 3}
   _shootTime: 0
   _Speed: 2
   _EnemyScale: 7.6
@@ -1163,6 +1195,7 @@ MonoBehaviour:
   _enemyScore: 10000
   A1BulletSpeed: 2
   _shootAngle: 90
+  TARGET: {fileID: 713825336}
 --- !u!60 &1534172878
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -5768,6 +5801,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1920736835581077787, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
+      propertyPath: m_Mass
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 3101156292235671804, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
       propertyPath: _BOOM
       value: 
@@ -6430,3 +6467,4 @@ SceneRoots:
   - {fileID: 1218328552}
   - {fileID: 2069336640}
   - {fileID: 1534172876}
+  - {fileID: 713825337}

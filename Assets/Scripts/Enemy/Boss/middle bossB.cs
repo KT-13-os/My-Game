@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using UnityEngine;
+using Random =  UnityEngine.Random;
 
 public class middlebossB : Enemy
 {
@@ -18,6 +19,8 @@ public class middlebossB : Enemy
     //trueの間はその種類の攻撃をストップさせる
     private bool PlayBullet;
     private Transform Target;
+    //弾を南海打ったのか
+    private int PlayerMaruNum;
     enum AttackMode
     {
         A,
@@ -74,6 +77,7 @@ public class middlebossB : Enemy
     }
     private void GURUGURU()
     {
+        if(_shootCount<_shootTime)return;
         for(int i=0;i<2;i++)
         {
             float angleRange = Mathf.Deg2Rad * 360f;
@@ -140,17 +144,44 @@ public class middlebossB : Enemy
         if(PlayBullet==true)return;
         StartCoroutine(PlayerMARU());
     }
+    // private void NormalShoot()
+    // {
+    //     if(_shootCount<_shootTime)return;
+    //     if (BulletCount == 3)
+    //     {
+    //         _shootTime = 3f;
+    //         BulletCount = 0;
+    //         return;
+    //     }
+    //     else
+    //     {
+    //         _shootTime = 0.8f;
+    //     }
+    //     GameObject bulletObj = Instantiate(_bullet[2]);
+    //     Bullet shootbullet = bulletObj.GetComponent<Bullet>();
+    //     shootbullet.Speed(5);
+    //     shootbullet.KasokuCahange(-0.5f);
+    //     shootbullet.MoveChange(3,this.gameObject);
+    //     bulletObj.transform.position = transform.position;
+    //     Vector3 dir = _player.transform.position - transform.position;
+    //     bulletObj.transform.rotation = Quaternion.FromToRotation(transform.up, -dir);
+    //     BulletCount++;
+    //     _shootCount = 0;
+    // }
     private IEnumerator PlayerMARU()
     {
+        PlayerMaruNum=6;
         TARGET.transform.position=_player.transform.position;
         Target=TARGET.transform;
         PlayBullet=true;
+        for(int i1=0;i1<3;i1++)
+        {
         for(int I=0;I<2;I++)
         {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < PlayerMaruNum; i++)
         {
             float angleRange = Mathf.Deg2Rad * 360f;
-            float theta = angleRange / 10 * i - Mathf.Deg2Rad * (90+(360/20)*I + 360f / 2f);
+            float theta = angleRange / PlayerMaruNum * i - Mathf.Deg2Rad * (90+360/(PlayerMaruNum*2)*I + 360f / 2f);
             GameObject bullet = Instantiate(_bullet[0]);
             Bullet shootbullet = bullet.GetComponent<Bullet>();
             shootbullet.SetNumber(I);
@@ -160,8 +191,11 @@ public class middlebossB : Enemy
             bullet.transform.position = Target.position+new Vector3(Mathf.Cos(theta)*_bulletdistance,Mathf.Sin(theta)*_bulletdistance,0);
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(0.01f);
         }
+        }
+        Target.transform.position=new Vector3(Random.Range(-9,9),3,0);
+        PlayerMaruNum=7;
         }
         for(int i=0;i<2;i++)
         {
@@ -179,7 +213,7 @@ public class middlebossB : Enemy
             }
         }
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         PlayBullet=false;
     }
     private void A3()
