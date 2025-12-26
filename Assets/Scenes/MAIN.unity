@@ -1308,7 +1308,7 @@ MonoBehaviour:
   - {fileID: 4495805851959372256, guid: de644f413e755df49bd760cebd3645df, type: 3}
   - {fileID: 4796753032154128916, guid: 030bd842d0e83f148a8a179c4e0127f5, type: 3}
   - {fileID: 7241850975227748197, guid: 91ad9c579b0ee3d4882c65627b6d109a, type: 3}
-  _deadEffect: {fileID: 0}
+  _deadEffect: {fileID: 2052323087335097246, guid: 94b940e92f04e4345ae2e3e17527fc02, type: 3}
   _sound:
   - {fileID: 8300000, guid: f5ddc2b6c075e0b41b84a083899085bd, type: 3}
   _enemyScore: 10000

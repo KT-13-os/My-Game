@@ -22,9 +22,13 @@ public class middlebossB : Enemy
     //弾を何回撃ったのか
     private int PlayerMaruNum;
     private int _beemNum;
+    private int _beemCountmax;
     private int _beemAngle;
     //BEEMを呼び出した回数
     private int _beemCount;
+    private int GURUGURUNum;
+    private int MARUcountnum;
+    private int PLAYERMARUnummax;
     enum AttackMode
     {
         A,
@@ -36,31 +40,51 @@ public class middlebossB : Enemy
     protected override void Initialize()
     {
         PlayBullet=false;
-        _beemNum=9;
-        _beemAngle=90;
-        _beemCount=0;
+        DIFFICULTYcheak();
         _bulletdistance=3;
         _BulletCount=0;
         _shootTime=3;
         _difficulty.Phase=1;
         middleDifficultyHP(0);
         _Mhp = _hp;
-        if (_difficulty.DIFFICULTY == "Easy" || _difficulty.DIFFICULTY == "Normal"||_difficulty.DIFFICULTY=="VeryEasy")
+        if (_difficulty.DIFFICULTY == "Easy" ||_difficulty.DIFFICULTY=="VeryEasy")
         {
-            _PhaseHP = -100000000000000;
+            _PhaseHP = _Mhp/2;
+        }
+        else if(_difficulty.DIFFICULTY=="Hard"|| _difficulty.DIFFICULTY == "Normal")
+        {
+                _PhaseHP=_Mhp/3*2;
+        }
+        _attackMode = AttackMode.A1;
+    }
+    private void DIFFICULTYcheak()
+    {
+        if(_difficulty.DIFFICULTY=="Easy"||_difficulty.DIFFICULTY=="VeryEasy")
+        {
+        GURUGURUNum=1;
+        MARUcountnum=10;
+        PLAYERMARUnummax=1;
+        }
+        else if(_difficulty.DIFFICULTY=="Normal")
+        {
+        GURUGURUNum=1;
+        MARUcountnum=5;
+        PLAYERMARUnummax=2;
+        _beemNum=13;
+        _beemAngle=90;
+        _beemCount=3;
+        _beemCountmax=3;
         }
         else if(_difficulty.DIFFICULTY=="Hard")
         {
-            if(_difficulty.Phase==1)
-            {
-                _PhaseHP=_Mhp/3*2;
-            }
-            else
-            {
-            _PhaseHP = _Mhp / 2;
-            }
+        GURUGURUNum=2;
+        MARUcountnum=5;
+        PLAYERMARUnummax=3;
+        _beemNum=13;
+        _beemAngle=90;
+        _beemCount=3;
+        _beemCountmax=2;
         }
-        _attackMode = AttackMode.A3;
     }
     protected override void Atack()
     {
@@ -79,6 +103,19 @@ public class middlebossB : Enemy
     }
     private void A1()
     {
+        if(_hp<=_PhaseHP)
+        {
+            _attackMode=AttackMode.A2;
+            if(_difficulty.DIFFICULTY=="Easy"||_difficulty.DIFFICULTY=="VeryEasy")
+            {
+                _PhaseHP=-1000000000000000;
+            }
+            else{
+            _PhaseHP=_Mhp/3;
+            }
+            PhaseChange();
+            return;
+        }
         GURUGURU();
         MARU();
     }
@@ -90,7 +127,9 @@ public class middlebossB : Enemy
             float angleRange = Mathf.Deg2Rad * 360f;
             if(i==1)
             {
-            float theta = angleRange / 1 * 1 - Mathf.Deg2Rad * (-_shootAngle + 720 / 2f);
+            for(int I=0;I<GURUGURUNum;I++)
+            {
+            float theta = angleRange / GURUGURUNum * I - Mathf.Deg2Rad * (-_shootAngle + 720 / 2f);
             GameObject shootbullet = Instantiate(_bullet[0]);
             Bullet bullet = shootbullet.GetComponent<Bullet>();
             bullet.MoveChange(3,this.gameObject);
@@ -100,9 +139,12 @@ public class middlebossB : Enemy
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             shootbullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
             }
+            }
             else
             {
-            float theta = angleRange / 1 * 1 - Mathf.Deg2Rad * (_shootAngle + 360f / 2f);
+            for(int I=0;I<GURUGURUNum;I++)
+            {
+            float theta = angleRange / GURUGURUNum * I - Mathf.Deg2Rad * (_shootAngle + 360f / 2f);
             GameObject shootbullet = Instantiate(_bullet[0]);
             Bullet bullet = shootbullet.GetComponent<Bullet>();
             bullet.MoveChange(3,this.gameObject);
@@ -112,6 +154,7 @@ public class middlebossB : Enemy
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             shootbullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
             }
+            }
         }
             _BulletCount++;
             _shootAngle+=10;
@@ -120,7 +163,7 @@ public class middlebossB : Enemy
     }
     private void MARU()
     {
-        if(_BulletCount>=5)
+        if(_BulletCount>=MARUcountnum)
         {
         for(int I=0;I<2;I++)
         {
@@ -143,13 +186,19 @@ public class middlebossB : Enemy
     }
     private void A2()
     {
+        if(_hp<=_PhaseHP)
+        {
+            _attackMode=AttackMode.A3;
+            PhaseChange();
+            return;
+        }
         if(_player==null)
         {
             StopCoroutine(PlayerMARU(0));
             return;
         }
         if(PlayBullet==true)return;
-        StartCoroutine(PlayerMARU(3));
+        StartCoroutine(PlayerMARU(PLAYERMARUnummax));
     }
     // private void NormalShoot()
     // {
@@ -226,12 +275,22 @@ public class middlebossB : Enemy
     }
     private void A3()
     {
+        if(_hp<=0)
+        {
+            _attackMode=AttackMode.A;
+            Destroy(TARGET);
+            return;
+        }
         _shootCount=0;
         _shootTime=3;
         StartCoroutine(BEEM());
-        if(_beemCount>=2)
+        if(_beemCount>=_beemCountmax)
         {
         _beemCount=0;
+        if(_player==null)
+            {
+                return;
+            }
         StartCoroutine(PlayerMARU(1));
         }
     }

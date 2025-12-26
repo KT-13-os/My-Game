@@ -150,7 +150,7 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void DifficultyHP(int _HP)
     {
-        if(_difficulty.Phase==0)
+        if(_difficulty.StageNum==0)
         {
         if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="Tutorial"||_difficulty.DIFFICULTY=="VeryEasy")
         {
@@ -169,7 +169,7 @@ public class Enemy : MonoBehaviour
             _hp=_difficulty.testEnemyHP[_HP];
         }
         }
-        else if(_difficulty.Phase==1)
+        else if(_difficulty.StageNum==1)
         {
         if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="Tutorial"||_difficulty.DIFFICULTY=="VeryEasy")
         {
@@ -192,7 +192,7 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void middleDifficultyHP(int _HP)
     {
-        if(_difficulty.Phase==0)
+        if(_difficulty.StageNum==0)
         {
         if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="VeryEasy")
         {
@@ -211,23 +211,23 @@ public class Enemy : MonoBehaviour
             _hp=_difficulty.testBOSSHP[_HP];
         }
         }
-        else if(_difficulty.Phase==1)
+        else if(_difficulty.StageNum==1)
         {
         if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="VeryEasy")
         {
-            _hp = _difficulty.easyBOSSHP[_HP]*1.5f;
+            _hp = _difficulty.easyBOSSHP[_HP]*3f;
         }
         else if (_difficulty.DIFFICULTY == "Normal")
         {
-            _hp = _difficulty.normalBOSSHP[_HP]*1.5f;
+            _hp = _difficulty.normalBOSSHP[_HP]*3f;
         }
         else if (_difficulty.DIFFICULTY == "Hard")
         {
-            _hp = _difficulty.hardBOSSHP[_HP]*1.5f;
+            _hp = _difficulty.hardBOSSHP[_HP]*3f;
         }
         else if(_difficulty.DIFFICULTY=="TEST")
         {
-            _hp=_difficulty.testBOSSHP[_HP]*1.5f;
+            _hp=_difficulty.testBOSSHP[_HP]*3f;
         }
         }
     }
@@ -289,6 +289,7 @@ public class Enemy : MonoBehaviour
                 // _gamemanager.Score(_enemyScore);
                 if (_middle == true)
                 {
+                    PhaseChange();
                     GameObject EnemySpawner = GameObject.Find("EnemySpawner");
                     EnemySpawner enemySpawner = EnemySpawner.GetComponent<EnemySpawner>();
                     enemySpawner.NumberChange(100);
@@ -319,6 +320,7 @@ public class Enemy : MonoBehaviour
                 // _gamemanager.Score(_enemyScore);
                 if (_middle == true)
                 {
+                    PhaseChange();
                     GameObject EnemySpawner = GameObject.Find("EnemySpawner");
                     EnemySpawner enemySpawner = EnemySpawner.GetComponent<EnemySpawner>();
                     enemySpawner.NumberChange(100);
@@ -371,6 +373,25 @@ private void DeidAction()
                     GameObject HPUpItemObj = Instantiate(_Item[2]);
                     HPUpItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));
                 }
+    }
+    protected void PhaseChange()
+    {
+    foreach(GameObject bullet in GameObject.FindGameObjectsWithTag("bullet"))
+    {
+        Destroy(bullet);
+    }
+    GameObject HPUpItemObj = Instantiate(_Item[2]);
+    HPUpItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));
+    for (int i = 0; i < Random.Range(1, 9); i++)
+    {
+        GameObject powerItemObj = Instantiate(_Item[0]);
+        powerItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));
+    }
+    for (int i = 0; i < Random.Range(1, 6); i++)
+    {
+        GameObject pointItemObj = Instantiate(_Item[1]);
+        pointItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));
+    }
     }
     protected virtual void Move()
     {
