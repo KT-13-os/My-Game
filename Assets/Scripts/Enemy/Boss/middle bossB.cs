@@ -19,8 +19,12 @@ public class middlebossB : Enemy
     //trueの間はその種類の攻撃をストップさせる
     private bool PlayBullet;
     private Transform Target;
-    //弾を南海打ったのか
+    //弾を何回撃ったのか
     private int PlayerMaruNum;
+    private int _beemNum;
+    private int _beemAngle;
+    //BEEMを呼び出した回数
+    private int _beemCount;
     enum AttackMode
     {
         A,
@@ -32,6 +36,9 @@ public class middlebossB : Enemy
     protected override void Initialize()
     {
         PlayBullet=false;
+        _beemNum=9;
+        _beemAngle=90;
+        _beemCount=0;
         _bulletdistance=3;
         _BulletCount=0;
         _shootTime=3;
@@ -53,7 +60,7 @@ public class middlebossB : Enemy
             _PhaseHP = _Mhp / 2;
             }
         }
-        _attackMode = AttackMode.A2;
+        _attackMode = AttackMode.A3;
     }
     protected override void Atack()
     {
@@ -138,11 +145,11 @@ public class middlebossB : Enemy
     {
         if(_player==null)
         {
-            StopCoroutine(PlayerMARU());
+            StopCoroutine(PlayerMARU(0));
             return;
         }
         if(PlayBullet==true)return;
-        StartCoroutine(PlayerMARU());
+        StartCoroutine(PlayerMARU(3));
     }
     // private void NormalShoot()
     // {
@@ -168,13 +175,13 @@ public class middlebossB : Enemy
     //     BulletCount++;
     //     _shootCount = 0;
     // }
-    private IEnumerator PlayerMARU()
+    private IEnumerator PlayerMARU(int MARUnum)
     {
         PlayerMaruNum=6;
         TARGET.transform.position=_player.transform.position;
         Target=TARGET.transform;
         PlayBullet=true;
-        for(int i1=0;i1<3;i1++)
+        for(int i1=0;i1<MARUnum;i1++)
         {
         for(int I=0;I<2;I++)
         {
@@ -204,6 +211,7 @@ public class middlebossB : Enemy
         foreach(GameObject bullet in _bullets)
         {
             Bullet shootbullet=bullet.GetComponent<Bullet>();
+            if(shootbullet==null)continue;
             if(shootbullet.GetNumber()==i)
             {
                 shootbullet.MoveChange(3,this.gameObject);
@@ -218,5 +226,33 @@ public class middlebossB : Enemy
     }
     private void A3()
     {
+        _shootCount=0;
+        _shootTime=3;
+        StartCoroutine(BEEM());
+        if(_beemCount>=2)
+        {
+        _beemCount=0;
+        StartCoroutine(PlayerMARU(1));
+        }
+    }
+    private IEnumerator BEEM()
+    {
+        TARGET.transform.position=gameObject.transform.position;
+        Linerenderscript linerenderscript=TARGET.GetComponent<Linerenderscript>();
+        StartCoroutine(linerenderscript.middleBossBLine(_beemNum,_beemAngle));
+        yield return new WaitForSeconds(1f);
+        for (int i=0;i<_beemNum;i++)
+        {
+            float angleRange = Mathf.Deg2Rad * 360f;
+            float theta = angleRange / _beemNum * i - Mathf.Deg2Rad * (_beemAngle + 360f / 2f);
+            GameObject bullet = Instantiate(_bullet[3]);
+            Beem _beem = bullet.GetComponent<Beem>();
+            bullet.transform.position = transform.position+new Vector3(Mathf.Cos(theta)*6.2f,Mathf.Sin(theta)*6.2f,0);
+            Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
+            bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
+            bullet.transform.rotation=Quaternion.Euler(0,0,bullet.transform.rotation.eulerAngles.z+90);
+        }
+        _beemCount++;
+        _beemAngle+=30;
     }
 }

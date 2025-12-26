@@ -150,6 +150,8 @@ public class Enemy : MonoBehaviour
     }
     protected virtual void DifficultyHP(int _HP)
     {
+        if(_difficulty.Phase==0)
+        {
         if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="Tutorial"||_difficulty.DIFFICULTY=="VeryEasy")
         {
             _hp = _difficulty.easyEnemyHP[_HP];
@@ -166,10 +168,32 @@ public class Enemy : MonoBehaviour
         {
             _hp=_difficulty.testEnemyHP[_HP];
         }
+        }
+        else if(_difficulty.Phase==1)
+        {
+        if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="Tutorial"||_difficulty.DIFFICULTY=="VeryEasy")
+        {
+            _hp = _difficulty.easyEnemyHP[_HP]*1.2f;
+        }
+        else if (_difficulty.DIFFICULTY == "Normal")
+        {
+            _hp = _difficulty.normalEnemyHP[_HP]*1.2f;
+        }
+        else if (_difficulty.DIFFICULTY == "Hard")
+        {
+            _hp = _difficulty.hardEnemyHP[_HP]*1.2f;
+        }
+        else if(_difficulty.DIFFICULTY=="TEST")
+        {
+            _hp=_difficulty.testEnemyHP[_HP]*1.2f;
+        }
+        }
         // Debug.Log(_difficulty.DIFFICULTY+"ENEMYHP"+_hp);
     }
     protected virtual void middleDifficultyHP(int _HP)
     {
+        if(_difficulty.Phase==0)
+        {
         if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="VeryEasy")
         {
             _hp = _difficulty.easyBOSSHP[_HP];
@@ -185,6 +209,26 @@ public class Enemy : MonoBehaviour
         else if(_difficulty.DIFFICULTY=="TEST")
         {
             _hp=_difficulty.testBOSSHP[_HP];
+        }
+        }
+        else if(_difficulty.Phase==1)
+        {
+        if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="VeryEasy")
+        {
+            _hp = _difficulty.easyBOSSHP[_HP]*1.5f;
+        }
+        else if (_difficulty.DIFFICULTY == "Normal")
+        {
+            _hp = _difficulty.normalBOSSHP[_HP]*1.5f;
+        }
+        else if (_difficulty.DIFFICULTY == "Hard")
+        {
+            _hp = _difficulty.hardBOSSHP[_HP]*1.5f;
+        }
+        else if(_difficulty.DIFFICULTY=="TEST")
+        {
+            _hp=_difficulty.testBOSSHP[_HP]*1.5f;
+        }
         }
     }
     protected virtual void CheckDifficulty()
