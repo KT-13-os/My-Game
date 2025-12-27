@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
         // _SESource.outputAudioMixerGroup = _SEGroup;
         // _audioMixer.SetFloat("VolumeParam_BGM",_BGMvalue);
         // _audioMixer.SetFloat("VolumeParam_SE",_SEvalue);
-        _Sdifficulty.StageNum=0;
+        _Sdifficulty.StageNum=1;
         _nscore = 0;
         _npower = 1;
         _glaze = 0;

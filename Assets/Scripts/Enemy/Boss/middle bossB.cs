@@ -11,7 +11,6 @@ public class middlebossB : Enemy
     private float A1BulletSpeed;
     [SerializeField, Header("円形に弾を発射する間隔")]
     private float _shootAngle;
-    [SerializeField, Header("プレイヤーロックオンobject")]
     private GameObject TARGET;
     private int _BulletCount;
     //プレイヤーを中心に呼び出す円の半径
@@ -40,6 +39,10 @@ public class middlebossB : Enemy
     protected override void Initialize()
     {
         PlayBullet=false;
+        if(TARGET=GameObject.Find("TARGETobject"))
+        {
+            TARGET=GameObject.Find("TARGETobject");
+        }
         DIFFICULTYcheak();
         _bulletdistance=3;
         _BulletCount=0;
@@ -188,6 +191,10 @@ public class middlebossB : Enemy
     {
         if(_hp<=_PhaseHP)
         {
+            if(PlayBullet==true)
+            {
+                StopCoroutine(PlayerMARU(PlayerMaruNum));
+            }
             _attackMode=AttackMode.A3;
             PhaseChange();
             return;

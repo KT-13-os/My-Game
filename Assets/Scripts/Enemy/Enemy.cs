@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
     protected GameObject[] _bullet;
     [SerializeField, Header("弾を発射する時間")]
     protected float _shootTime;
+    [SerializeField, Header("HP倍率")]
+    private float _hpEXP=1;
     protected float _hp;
     protected float _Mhp;
     protected float _PhaseHP;
@@ -154,38 +156,38 @@ public class Enemy : MonoBehaviour
         {
         if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="Tutorial"||_difficulty.DIFFICULTY=="VeryEasy")
         {
-            _hp = _difficulty.easyEnemyHP[_HP];
+            _hp = _difficulty.easyEnemyHP[_HP]*_hpEXP;
         }
         else if (_difficulty.DIFFICULTY == "Normal")
         {
-            _hp = _difficulty.normalEnemyHP[_HP];
+            _hp = _difficulty.normalEnemyHP[_HP]*_hpEXP;
         }
         else if (_difficulty.DIFFICULTY == "Hard")
         {
-            _hp = _difficulty.hardEnemyHP[_HP];
+            _hp = _difficulty.hardEnemyHP[_HP]*_hpEXP;
         }
         else if(_difficulty.DIFFICULTY=="TEST")
         {
-            _hp=_difficulty.testEnemyHP[_HP];
+            _hp=_difficulty.testEnemyHP[_HP]*_hpEXP;
         }
         }
         else if(_difficulty.StageNum==1)
         {
         if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="Tutorial"||_difficulty.DIFFICULTY=="VeryEasy")
         {
-            _hp = _difficulty.easyEnemyHP[_HP]*1.2f;
+            _hp = _difficulty.easyEnemyHP[_HP]*_hpEXP;
         }
         else if (_difficulty.DIFFICULTY == "Normal")
         {
-            _hp = _difficulty.normalEnemyHP[_HP]*1.2f;
+            _hp = _difficulty.normalEnemyHP[_HP]*_hpEXP;
         }
         else if (_difficulty.DIFFICULTY == "Hard")
         {
-            _hp = _difficulty.hardEnemyHP[_HP]*1.2f;
+            _hp = _difficulty.hardEnemyHP[_HP]*1.2f*_hpEXP;
         }
         else if(_difficulty.DIFFICULTY=="TEST")
         {
-            _hp=_difficulty.testEnemyHP[_HP]*1.2f;
+            _hp=_difficulty.testEnemyHP[_HP]*1.2f*_hpEXP;
         }
         }
         // Debug.Log(_difficulty.DIFFICULTY+"ENEMYHP"+_hp);
@@ -215,19 +217,19 @@ public class Enemy : MonoBehaviour
         {
         if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="VeryEasy")
         {
-            _hp = _difficulty.easyBOSSHP[_HP]*3f;
+            _hp = _difficulty.easyBOSSHP[_HP]*4;
         }
         else if (_difficulty.DIFFICULTY == "Normal")
         {
-            _hp = _difficulty.normalBOSSHP[_HP]*3f;
+            _hp = _difficulty.normalBOSSHP[_HP]*4;
         }
         else if (_difficulty.DIFFICULTY == "Hard")
         {
-            _hp = _difficulty.hardBOSSHP[_HP]*3f;
+            _hp = _difficulty.hardBOSSHP[_HP]*4.2f;
         }
         else if(_difficulty.DIFFICULTY=="TEST")
         {
-            _hp=_difficulty.testBOSSHP[_HP]*3f;
+            _hp=_difficulty.testBOSSHP[_HP]*3;
         }
         }
     }

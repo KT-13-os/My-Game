@@ -149,6 +149,7 @@ public class BulletEnemy : Enemy
         if (_EnemyScale >= 8.0f)
         {
             if (_EnemyScale >= 9.0f) return;
+            DifficultyHP(1);
             _Maru3Angle=0;
             _Maru3Num=4;
             _shootTime=1.6f;
@@ -168,6 +169,7 @@ public class BulletEnemy : Enemy
         {
             if (_EnemyScale >= 7.0f) return;
             position = transform.position;
+            DifficultyHP(2);
             period += Random.Range(0f, 1f);
             _attackMode = AttackMode.jibaku;
             searchNearObj = FindClosestPlayer();
@@ -388,9 +390,9 @@ public class BulletEnemy : Enemy
             Vector3 diff = randomPos - position;
             acceleration += (diff - velocity * period) * 2f / (period * period);
         }
-        if (acceleration.magnitude > 10f)
+        if (acceleration.magnitude > 6f)
         {
-            acceleration = acceleration.normalized * 10f;
+            acceleration = acceleration.normalized * 6f;
         }
         period -= Time.deltaTime;
         if (period < 0f)
