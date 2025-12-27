@@ -48,6 +48,7 @@ public class EnemySpawner : MonoBehaviour
     private GameObject[] _spawnEnemys;
     public bool _tutorial = false;
     private float _spawnCount;
+    private float _spawnTime;
     private int _spawnNum;
     private float _Count;
     private float _summonTime;
@@ -95,6 +96,7 @@ public class EnemySpawner : MonoBehaviour
     }
     public void START()
     {
+        _spawnTime=3;
         _difficulty.Phase=0;
         _spawnCount = 0.0f;
         _spawnNum = 0;
@@ -109,9 +111,9 @@ public class EnemySpawner : MonoBehaviour
         if(_difficulty.StageNum==0)
         {
         if(_difficulty.DIFFICULTY=="Easy")
-            {
-                _spawnEnemys=_enemysManager._EASYenemys1;
-            }
+        {
+            _spawnEnemys=_enemysManager._EASYenemys1;
+        }
         else if(_difficulty.DIFFICULTY=="Normal")
         {
             _spawnEnemys=_enemysManager._NORMALenemys1;
@@ -139,7 +141,6 @@ public class EnemySpawner : MonoBehaviour
     }
     void Update()
     {
-        _spawnCount += Time.deltaTime;
         if (_tutorial == true) return;
         if (_spawnNum == Number + 1) return;
         // _boss.AttackOK();
@@ -205,8 +206,10 @@ public class EnemySpawner : MonoBehaviour
             {
                 if(_OLDobjects!=null)return;
             }
-            if(_spawnCount<1.2f)return;
+            _spawnCount += Time.deltaTime;
+            if(_spawnCount<_spawnTime)return;
             _OLDobjects=Instantiate(_spawnEnemys[_spawnNum]);
+            _spawnTime=0.8f;
             _spawnNum++;
             _spawnCount=0;
     }
@@ -229,10 +232,12 @@ public class EnemySpawner : MonoBehaviour
             {
                 if(_OLDobjects!=null)return;
             }
-            if(_spawnCount<1.2f)return;
+            _spawnCount += Time.deltaTime;
+            if(_spawnCount<_spawnTime)return;
             _OLDobjects=Instantiate(_spawnEnemys[_spawnNum]);
             _spawnNum++;
             _spawnCount=0;
+            _spawnTime=0.6f;
     }
     private void SpawnHARD()
     {
@@ -253,10 +258,12 @@ public class EnemySpawner : MonoBehaviour
             {
                 if(_OLDobjects!=null)return;
             }
-            if(_spawnCount<1.2f)return;
+            _spawnCount += Time.deltaTime;
+            if(_spawnCount<_spawnTime)return;
             _OLDobjects=Instantiate(_spawnEnemys[_spawnNum]);
             _spawnNum++;
             _spawnCount=0;
+            _spawnTime=0.4f;
     }
     public void OWARI()
     {
