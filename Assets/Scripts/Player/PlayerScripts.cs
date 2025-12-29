@@ -303,6 +303,7 @@ public class PlayerScripts : MonoBehaviour
     public void HPUp()
     {
         if (_difficulty.DIFFICULTY == "Tutorial") return;
+        if(_hp>=8)return;
         _hp++;
         _hpicon.HpUp();
     }

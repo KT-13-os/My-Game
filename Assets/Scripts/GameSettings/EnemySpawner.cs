@@ -190,25 +190,28 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEASY()
     {
         if (_Not == true) return;
-        if (_spawnNum >= _spawnEnemys.Length)
+            if(_spawnNum>=1)
+            {
+                if(_OLDobjects!=null)return;
+            }
+        if (_spawnNum > _spawnEnemys.Length)
         {
             _Count += Time.deltaTime;
-            if (_Count < 6) return;
+            if (_Count < 2) return;
             _boss.AttackOK();
             _slider.AttackOk();
-            if (_Count >= 6.01f) return;
+            if (_Count >= 2.01f) return;
             _GameManager.ChangeBackGlound(0);
             _difficulty.Phase=1;
             return;
         }
         // if (_spawnCount >= _TESTenemy.Length - 1) return;
-            if(_spawnNum>=1)
-            {
-                if(_OLDobjects!=null)return;
-            }
             _spawnCount += Time.deltaTime;
             if(_spawnCount<_spawnTime)return;
+            if(_spawnNum<_spawnEnemys.Length)
+            {
             _OLDobjects=Instantiate(_spawnEnemys[_spawnNum]);
+            }
             _spawnTime=0.8f;
             _spawnNum++;
             _spawnCount=0;
@@ -216,25 +219,28 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnNORMAL()
     {
         if (_Not == true) return;
-        if (_spawnNum >= _spawnEnemys.Length)
+            if(_spawnNum>=1)
+            {
+                if(_OLDobjects!=null)return;
+            }
+        if (_spawnNum > _spawnEnemys.Length)
         {
             _Count += Time.deltaTime;
-            if (_Count < 6) return;
+            if (_Count < 2) return;
             _boss.AttackOK();
             _slider.AttackOk();
-            if (_Count >= 6.01f) return;
+            if (_Count >= 2.01f) return;
             _GameManager.ChangeBackGlound(0);
             _difficulty.Phase=1;
             return;
         }
         // if (_spawnCount >= _TESTenemy.Length - 1) return;
-            if(_spawnNum>=1)
-            {
-                if(_OLDobjects!=null)return;
-            }
             _spawnCount += Time.deltaTime;
             if(_spawnCount<_spawnTime)return;
+            if(_spawnNum<_spawnEnemys.Length)
+            {
             _OLDobjects=Instantiate(_spawnEnemys[_spawnNum]);
+            }
             _spawnNum++;
             _spawnCount=0;
             _spawnTime=0.6f;
@@ -242,25 +248,28 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnHARD()
     {
         if (_Not == true) return;
-        if (_spawnNum >= _spawnEnemys.Length)
+            if(_spawnNum>=1)
+            {
+                if(_OLDobjects!=null)return;
+            }
+        if (_spawnNum > _spawnEnemys.Length)
         {
             _Count += Time.deltaTime;
-            if (_Count < 6) return;
+            if (_Count < 2) return;
             _boss.AttackOK();
             _slider.AttackOk();
-            if (_Count >= 6.01f) return;
+            if (_Count >= 2.01f) return;
             _GameManager.ChangeBackGlound(0);
             _difficulty.Phase=1;
             return;
         }
         // if (_spawnCount >= _TESTenemy.Length - 1) return;
-            if(_spawnNum>=1)
-            {
-                if(_OLDobjects!=null)return;
-            }
             _spawnCount += Time.deltaTime;
             if(_spawnCount<_spawnTime)return;
+            if(_spawnNum<_spawnEnemys.Length)
+            {
             _OLDobjects=Instantiate(_spawnEnemys[_spawnNum]);
+            }
             _spawnNum++;
             _spawnCount=0;
             _spawnTime=0.4f;

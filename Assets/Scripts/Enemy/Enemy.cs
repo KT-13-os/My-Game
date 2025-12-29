@@ -25,6 +25,9 @@ public class Enemy : MonoBehaviour
     protected float _hp;
     protected float _Mhp;
     protected float _PhaseHP;
+    [SerializeField, Header("待機する時間")]
+    private float _WaitTime;
+    private float _WaitCount;
     [SerializeField, Header("移動速度")]
     private float _Speed;
     [SerializeField, Header("敵の種類")]
@@ -85,6 +88,7 @@ public class Enemy : MonoBehaviour
         {
             _player = GameObject.Find("Player");
         }
+        _WaitCount=0;
         _mutekiCount = 0;
         _audioSource = gameObject.GetComponent<AudioSource>();
         _renderer=GetComponent<Renderer>();
@@ -106,6 +110,10 @@ public class Enemy : MonoBehaviour
             }
         }
         CheckDifficulty();
+        if(_hpEXP>=2)
+        {
+            RandomHP=1;
+        }
         Initialize();
         if (_tutorial == true) return;
         if (_EnemyScale == 0.0f || _EnemyScale == 1.0f || _EnemyScale == 2.0f || _EnemyScale == 3.0f || _EnemyScale == 4.0f || _EnemyScale == 5.0f|| _EnemyScale == 8.0f)
@@ -183,7 +191,7 @@ public class Enemy : MonoBehaviour
         }
         else if (_difficulty.DIFFICULTY == "Hard")
         {
-            _hp = _difficulty.hardEnemyHP[_HP]*1.2f*_hpEXP;
+            _hp = _difficulty.hardEnemyHP[_HP]*1f*_hpEXP;
         }
         else if(_difficulty.DIFFICULTY=="TEST")
         {
@@ -249,7 +257,7 @@ public class Enemy : MonoBehaviour
         }
         else if (_difficulty.DIFFICULTY == "Hard")
         {
-            RandomHP = 8;
+            RandomHP = 12;
         }
     }
     protected virtual void Initialize()
@@ -258,6 +266,8 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         // _mutekiCount += Time.deltaTime;
+        _WaitCount+=Time.deltaTime;
+        if(_WaitCount<_WaitTime)return;
         Move();
         Atack();
     }
@@ -360,12 +370,20 @@ public class Enemy : MonoBehaviour
 private void DeidAction()
     {
                 HpUp = Random.Range(0, RandomHP);
-                for (int i = 0; i < Random.Range(1, 9); i++)
+                if(_hpEXP>=2)
+                {
+                    for (int i = 0; i < Random.Range(2, 10); i++)
                 {
                     GameObject powerItemObj = Instantiate(_Item[0]);
                     powerItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));
                 }
-                for (int i = 0; i < Random.Range(1, 6); i++)
+                }
+                for (int i = 0; i < Random.Range(1, 4); i++)
+                {
+                    GameObject powerItemObj = Instantiate(_Item[0]);
+                    powerItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));
+                }
+                for (int i = 0; i < Random.Range(3, 6); i++)
                 {
                     GameObject pointItemObj = Instantiate(_Item[1]);
                     pointItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));
@@ -467,6 +485,7 @@ private void DeidAction()
     }
     private IEnumerator ENTER(float A, float B,int MODE)
     {
+        yield return new WaitForSeconds(_WaitTime);
         for (int i = 0; i < 10000; i++)
         {
             _shootCount=0;

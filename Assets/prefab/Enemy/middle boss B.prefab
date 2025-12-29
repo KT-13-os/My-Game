@@ -109,7 +109,15 @@ MonoBehaviour:
   - {fileID: 6274632669645906559, guid: 6d0e64dcc2e05764289ea6eacca4e35d, type: 3}
   - {fileID: 3338375639557933969, guid: b5075ca4b531d9447bfaf47856e67540, type: 3}
   - {fileID: 9110545054515617581, guid: 34c0a8ae249416749842c48b396606ea, type: 3}
+  - {fileID: 2831324742676514701, guid: 59c3d45979eaccb48843f3377bfb22c1, type: 3}
+  - {fileID: 3411078769017175139, guid: 1655712a837cd7d45a4dda37106bb6be, type: 3}
+  - {fileID: 8062089404133297035, guid: 183067bee6801624797f80fdbd7f416d, type: 3}
+  - {fileID: 5733026260004587915, guid: fa136bab3b46f9a4b9e1e825d7e097dc, type: 3}
+  - {fileID: 750817637468399111, guid: 4cc8aa10be12b7d408e85fa2e39c9f00, type: 3}
+  - {fileID: 6274632669645906559, guid: 278fe82528fee2f4faee6d4794e2aa98, type: 3}
   _shootTime: 0
+  _hpEXP: 1
+  _WaitTime: 0
   _Speed: 2
   _EnemyScale: 7.6
   _damageEffectTime: 0.1
@@ -124,7 +132,7 @@ MonoBehaviour:
   _enemyScore: 10000
   A1BulletSpeed: 2
   _shootAngle: 90
-  TARGET: {fileID: 7672351060056756782, guid: ce4f09ae19a929a4b87737ba9a506768, type: 3}
+  TARGETobject: {fileID: 7672351060056756782, guid: ce4f09ae19a929a4b87737ba9a506768, type: 3}
 --- !u!50 &8280468357412177365
 Rigidbody2D:
   serializedVersion: 4

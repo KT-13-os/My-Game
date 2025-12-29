@@ -247,7 +247,6 @@ public class Bullet : MonoBehaviour
     public void ResetA(float _Bpower)
     {
         _power = _Bpower;
-        Debug.Log(_power);
     }
     public void Speed(float Pspeed)
     {

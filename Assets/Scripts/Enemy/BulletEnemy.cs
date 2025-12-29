@@ -41,6 +41,8 @@ public class BulletEnemy : Enemy
     private int _ougiAttackCount;
     [SerializeField, Header("打つ弾の速さのプラス値")]
     private float _Pspeed;
+    private float _Maru3Num;
+    private int _Maru3bulletNum;
     private float _rotateZ;
     private float _LRAttackCount;
     // private float _circleShootCount;
@@ -50,7 +52,6 @@ public class BulletEnemy : Enemy
     private int _SakuretuCount;
     private float _SakuretuTime;
     private int B = 0;
-    private float _Maru3Num;
     private float _Maru3Angle;
     private int _HomeCount;
     Vector3 velocity;
@@ -128,6 +129,8 @@ public class BulletEnemy : Enemy
             _SakuretuNum = 3;
             _SakuretuCount = 1;
             _SakuretuTime = 1;
+            _Maru3bulletNum=5;
+            _Maru3Num=4;
         }
         else if (_difficulty.DIFFICULTY == "Normal")
         {
@@ -136,6 +139,8 @@ public class BulletEnemy : Enemy
             _SakuretuNum = 4;
             _SakuretuCount = 1;
             _SakuretuTime = 1;
+            _Maru3bulletNum=4;
+            _Maru3Num=4;
         }
         else if (_difficulty.DIFFICULTY == "Hard")
         {
@@ -144,6 +149,8 @@ public class BulletEnemy : Enemy
             _SakuretuNum = 5;
             _SakuretuCount = 1;
             _SakuretuTime = 2;
+            _Maru3bulletNum=5;
+            _Maru3Num=4;
         }
         //8のやつ
         if (_EnemyScale >= 8.0f)
@@ -151,8 +158,7 @@ public class BulletEnemy : Enemy
             if (_EnemyScale >= 9.0f) return;
             DifficultyHP(1);
             _Maru3Angle=0;
-            _Maru3Num=4;
-            _shootTime=1.6f;
+            _shootTime=1.5f;;
             _Pspeed=1;
             _attackMode = AttackMode.Maru3Attack;
             return;
@@ -352,7 +358,7 @@ public class BulletEnemy : Enemy
     {
         if (B == _circleBulletCount)
         {
-            _shootTime = 0.4f;
+            _shootTime = 0.6f;
             B = 0;
             return;
         }
@@ -434,7 +440,7 @@ public class BulletEnemy : Enemy
             _Pspeed=1;
             _HomeCount++;
             B = 0;
-            if(_HomeCount>=5)
+            if(_HomeCount>=8)
             {
                 KansuMOVE("EXIT",6,8,0);
             }
@@ -444,7 +450,7 @@ public class BulletEnemy : Enemy
         {
             _Pspeed=4;
         }
-        for(int I=0;I<10;I++)
+        for(int I=0;I<_Maru3bulletNum;I++)
         {
         for (int i = 0; i < _Maru3Num; i++)
         {
@@ -459,7 +465,7 @@ public class BulletEnemy : Enemy
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
         }
-        _Maru3Angle+=4.5f;
+        _Maru3Angle+=(360/(_Maru3Num*2))/_Maru3bulletNum;
         }
         _shootCount=0;
         B++;

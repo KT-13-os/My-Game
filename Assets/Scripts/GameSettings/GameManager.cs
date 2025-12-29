@@ -10,6 +10,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
+using Random =  UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
