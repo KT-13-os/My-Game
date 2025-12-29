@@ -69,6 +69,7 @@ public class Enemy : MonoBehaviour
     private float mY;
     private float TX;
     private bool puras;
+    private int _ItemChance;
     enum MoveMode
     {
         down,
@@ -108,6 +109,14 @@ public class Enemy : MonoBehaviour
             _mutekiTime = 1.2f;
                 DifficultyHP(1);
             }
+        }
+        if(_difficulty.StageNum==0)
+        {
+            _ItemChance=8;
+        }
+        else
+        {
+            _ItemChance=4;
         }
         CheckDifficulty();
         Initialize();
@@ -378,7 +387,7 @@ private void DeidAction()
                     powerItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));
                 }
                 }
-                for (int i = 0; i < Random.Range(1, 4); i++)
+                for (int i = 0; i < Random.Range(_ItemChance/2-1, _ItemChance); i++)
                 {
                     GameObject powerItemObj = Instantiate(_Item[0]);
                     powerItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));

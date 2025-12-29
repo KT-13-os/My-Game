@@ -136,7 +136,7 @@ public class PlayerScripts : MonoBehaviour
         _levelPowerburst=1.2f;
         }
         }
-        else if(_difficulty.StageNum==1)
+        else
         {
         if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY == "Tutorial"||_difficulty.DIFFICULTY=="VeryEasy"||_difficulty.DIFFICULTY=="TEST")
         {
