@@ -285,8 +285,7 @@ public class middlebossB : Enemy
         {
             _attackMode=AttackMode.A;
             Linerenderscript linerenderscript=TARGET.GetComponent<Linerenderscript>();
-            StartCoroutine(linerenderscript.middleBossBLine(0,_beemAngle));
-            Destroy(TARGET);
+            linerenderscript.STOPline();
             return;
         }
         _shootCount=0;

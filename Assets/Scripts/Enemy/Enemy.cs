@@ -110,10 +110,6 @@ public class Enemy : MonoBehaviour
             }
         }
         CheckDifficulty();
-        if(_hpEXP>=2)
-        {
-            RandomHP=1;
-        }
         Initialize();
         if (_tutorial == true) return;
         if (_EnemyScale == 0.0f || _EnemyScale == 1.0f || _EnemyScale == 2.0f || _EnemyScale == 3.0f || _EnemyScale == 4.0f || _EnemyScale == 5.0f|| _EnemyScale == 8.0f)
@@ -257,7 +253,11 @@ public class Enemy : MonoBehaviour
         }
         else if (_difficulty.DIFFICULTY == "Hard")
         {
-            RandomHP = 12;
+            RandomHP = 0;
+            if(_hpEXP>=2)
+            {
+            RandomHP=1;
+            }
         }
     }
     protected virtual void Initialize()

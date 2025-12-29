@@ -31,4 +31,11 @@ public class Linerenderscript : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _lineRenderer.positionCount=0;
     }
+    public void STOPline()
+    {
+        StopCoroutine(middleBossBLine(0,0));
+        _lineRenderer.positionCount=0;
+        _lineRenderer.SetPosition(0,this.gameObject.transform.position);
+        Destroy(this.gameObject);
+    }
 }

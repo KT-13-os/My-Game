@@ -119,7 +119,7 @@ public class PlayerScripts : MonoBehaviour
         }
         else if(_difficulty.DIFFICULTY=="Hard")
         {
-            _levelPowerburst = 1.2f;
+            _levelPowerburst = 1.3f;
         }
         if (Tutorial == true||_difficulty.PlayerInfinity=="INFINITY")
         {
