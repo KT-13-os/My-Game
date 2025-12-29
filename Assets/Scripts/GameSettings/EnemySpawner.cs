@@ -98,10 +98,10 @@ public class EnemySpawner : MonoBehaviour
     {
         _spawnTime=3;
         _difficulty.Phase=0;
+        StageChange();
         _spawnCount = 0.0f;
         _spawnNum = 0;
         _Count = 0;
-        StageChange();
         _Boss.transform.position=new Vector3(-3,8,0);
         _Boss.SetActive(false);
         slider.SetActive(false);

@@ -12,7 +12,7 @@ public class Glazecircle : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     void Start()
     {
-        _Time = 0.08f;
+        _Time = 0.2f;
         _count = 0;
         _GameManager = _gamemanager.GetComponent<GameManager>();
         _rigidbody2D=gameObject.GetComponent<Rigidbody2D>();
@@ -27,9 +27,9 @@ public class Glazecircle : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         _count += Time.deltaTime;
-        if (_count < _Time) return;
         if (collision.gameObject.tag == "bullet")
         {
+            if (_count < _Time) return;
             _rigidbody2D.WakeUp();
             _GameManager.Glaze(1);
             _count=0;

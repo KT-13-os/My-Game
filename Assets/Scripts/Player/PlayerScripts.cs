@@ -83,15 +83,9 @@ public class PlayerScripts : MonoBehaviour
     private ShootingMode _shootingMode;
     void Start()
     {
-        //初期化
         _GlazeCircle = _glazecircle.GetComponent<Glazecircle>();
         _audioSource = gameObject.GetComponent<AudioSource>();
         Muteki = false;
-        _shootingMode = ShootingMode.A1;
-        _powercount = 0;
-        _PowerLevel = 0;
-        _boom = 2;
-        _power = 1;
         not = false;
         _inputVelocity = Vector2.zero;
         _hpicon = _hpIcon.GetComponent<HPIcon>();
@@ -106,26 +100,57 @@ public class PlayerScripts : MonoBehaviour
         _bdamage = false;
         // _bshoot = false;
         _notshoot = false;
-        _BshootCount = _BshootMaxCount;
-        _levelPower = 10;
-        bullet.ResetA(_power);
-        if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY == "Tutorial"||_difficulty.DIFFICULTY=="VeryEasy"||_difficulty.DIFFICULTY=="TEST")
-        {
-            _levelPowerburst = 1.4f;
-        }
-        else if (_difficulty.DIFFICULTY == "Normal")
-        {
-            _levelPowerburst = 1.3f;
-        }
-        else if(_difficulty.DIFFICULTY=="Hard")
-        {
-            _levelPowerburst = 1.3f;
-        }
+        START();
+        TutorialStart();
+    }
+    public void START()
+    {
+        PowerBurstCheck();
         if (Tutorial == true||_difficulty.PlayerInfinity=="INFINITY")
         {
             Infinity();
         }
-        TutorialStart();
+        _shootingMode = ShootingMode.A1;
+        _powercount = 0;
+        _PowerLevel = 0;
+        _boom = 2;
+        _power = 1;
+        _BshootCount = _BshootMaxCount;
+        _levelPower = 10;
+        bullet.ResetA(_power);
+    }
+    private void PowerBurstCheck()
+    {
+        if(_difficulty.StageNum==0)
+        {
+        if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY == "Tutorial"||_difficulty.DIFFICULTY=="VeryEasy"||_difficulty.DIFFICULTY=="TEST")
+        {
+        _levelPowerburst = 1.4f;
+        }
+        else if (_difficulty.DIFFICULTY == "Normal")
+        {
+        _levelPowerburst = 1.3f;
+        }
+        else if(_difficulty.DIFFICULTY=="Hard")
+        {
+        _levelPowerburst=1.2f;
+        }
+        }
+        else if(_difficulty.StageNum==1)
+        {
+        if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY == "Tutorial"||_difficulty.DIFFICULTY=="VeryEasy"||_difficulty.DIFFICULTY=="TEST")
+        {
+        _levelPowerburst = 1.4f;
+        }
+        else if (_difficulty.DIFFICULTY == "Normal")
+        {
+        _levelPowerburst = 1.3f;
+        }
+        else if(_difficulty.DIFFICULTY=="Hard")
+        {
+        _levelPowerburst=1.3f;
+        }
+        }
     }
     void Update()
     {

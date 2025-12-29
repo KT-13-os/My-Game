@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
         // _SESource.outputAudioMixerGroup = _SEGroup;
         // _audioMixer.SetFloat("VolumeParam_BGM",_BGMvalue);
         // _audioMixer.SetFloat("VolumeParam_SE",_SEvalue);
-        _Sdifficulty.StageNum=1;
+        _Sdifficulty.StageNum=0;
         _nscore = 0;
         _npower = 1;
         _glaze = 0;
@@ -218,6 +218,7 @@ public class GameManager : MonoBehaviour
     }
     public void NEXT()
     {
+        _playerScripts.START();
         _Sdifficulty.StageNum++;
         _EnemySpawner.StageChange();
         Gamesituation = "Play";
@@ -225,6 +226,15 @@ public class GameManager : MonoBehaviour
         _gameclear.SetActive(false);
         _backGlound.SetActive(true);
         _backGlound2.SetActive(false);
+        _nscore = 0;
+        _npower = 1;
+        _glaze = 0;
+        GLAZE = 0;
+        POWER = 0;
+        SCORE = 0;
+        _scoretext.text="0";
+        _Glazetext.text="0";
+        _powertext.text="0";
         ChangeBackGlound(1);
     }
     public void summonA()
