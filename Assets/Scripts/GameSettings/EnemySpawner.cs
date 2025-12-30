@@ -110,7 +110,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if(_difficulty.StageNum==0)
         {
-        if(_difficulty.DIFFICULTY=="Easy")
+        if(_difficulty.DIFFICULTY=="Easy"||_difficulty.DIFFICULTY=="VeryEasy")
         {
             _spawnEnemys=_enemysManager._EASYenemys1;
         }
@@ -125,7 +125,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else if(_difficulty.StageNum==1)
         {
-        if(_difficulty.DIFFICULTY=="Easy")
+        if(_difficulty.DIFFICULTY=="Easy"||_difficulty.DIFFICULTY=="VeryEasy")
         {
             _spawnEnemys=_enemysManager._EASYenemys2;
         }
