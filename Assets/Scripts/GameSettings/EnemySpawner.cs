@@ -102,7 +102,7 @@ public class EnemySpawner : MonoBehaviour
         _spawnCount = 0.0f;
         _spawnNum = 0;
         _Count = 0;
-        if(_difficulty.DIFFICULTY=="Tutorial")
+        if(_difficulty.DIFFICULTY=="Tutorial")return;
         _Boss.transform.position=new Vector3(-3,8,0);
         _Boss.SetActive(false);
         slider.SetActive(false);
