@@ -92,7 +92,6 @@ public class PlayerScripts : MonoBehaviour
         not = false;
         _inputVelocity = Vector2.zero;
         _hpicon = _hpIcon.GetComponent<HPIcon>();
-        _boomicon=_bombIcon.GetComponent<BOOMIcon>();
         bullet = _playerbullet.GetComponent<Bullet>();
         _rigid = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -106,6 +105,8 @@ public class PlayerScripts : MonoBehaviour
         _notshoot = false;
         START();
         TutorialStart();
+        if(_difficulty.DIFFICULTY=="Tutorial")return;
+        _boomicon=_bombIcon.GetComponent<BOOMIcon>();
     }
     public void START()
     {
