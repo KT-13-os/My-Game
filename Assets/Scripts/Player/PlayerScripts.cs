@@ -339,7 +339,7 @@ public class PlayerScripts : MonoBehaviour
     public void Boomup()
     {
         _boomCount++;
-        if (_boomCount >= 200)
+        if (_boomCount >= 150)
         {
             _boomCount = 0;
             if (_boom >= 3) return;

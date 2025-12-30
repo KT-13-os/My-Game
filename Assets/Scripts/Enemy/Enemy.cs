@@ -101,14 +101,6 @@ public class Enemy : MonoBehaviour
         _defaultSprite = _spriteRenderer.sprite;
         _muteki = true;
         _mutekiTime = 0.5f;
-        if (_EnemyScale >= 1.0f)
-        {
-            if (_EnemyScale < 2.0f)
-            {
-            _mutekiTime = 1.2f;
-                DifficultyHP(1);
-            }
-        }
         if(_difficulty.StageNum==0)
         {
             _ItemChance=6;
@@ -118,6 +110,15 @@ public class Enemy : MonoBehaviour
             _ItemChance=4;
         }
         CheckDifficulty();
+        if (_EnemyScale >= 1.0f)
+        {
+            if (_EnemyScale < 2.0f)
+            {
+            _mutekiTime = 1.2f;
+            RandomHP=1;
+            DifficultyHP(1);
+            }
+        }
         Initialize();
         if (_tutorial == true) return;
         if (_EnemyScale == 0.0f || _EnemyScale == 1.0f || _EnemyScale == 2.0f || _EnemyScale == 3.0f || _EnemyScale == 4.0f || _EnemyScale == 5.0f|| _EnemyScale == 8.0f)
