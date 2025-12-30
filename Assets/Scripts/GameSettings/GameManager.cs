@@ -129,6 +129,7 @@ public class GameManager : MonoBehaviour
     private int _hpPoint;
     Sequence CountnUpScore;
     private SubGameManager subGameManager;
+    private AnimationManager animationManager;
     bool A;
     private float TIME;
     // private int _timePoint;
@@ -146,6 +147,7 @@ public class GameManager : MonoBehaviour
         TIME = 0;
         _audioSource = gameObject.GetComponent<AudioSource>();
         subGameManager = gameObject.GetComponent<SubGameManager>();
+        animationManager=gameObject.GetComponent<AnimationManager>();
         if(SceneManager.GetActiveScene().name == "MAIN")
         {
         _EnemySpawner = _enemyspowner.GetComponent<EnemySpawner>();
@@ -220,6 +222,7 @@ public class GameManager : MonoBehaviour
     {
         _playerScripts.START();
         _Sdifficulty.StageNum++;
+        _EnemySpawner.enabled=true;
         _EnemySpawner.StageChange();
         Gamesituation = "Play";
         _EnemySpawner.START();
@@ -234,7 +237,7 @@ public class GameManager : MonoBehaviour
         SCORE = 0;
         _scoretext.text="0";
         _Glazetext.text="0";
-        _powertext.text="0";
+        _powertext.text="1";
         ChangeBackGlound(1);
     }
     public void summonA()
@@ -434,6 +437,10 @@ public class GameManager : MonoBehaviour
         {
         _backGlound.SetActive(false);
         _backGlound2.SetActive(true);
+        }
+        else if(MODE==1)
+        {
+        animationManager.StageBackGloundChange();
         }
         for(int i=0;i<80;i++)
         {

@@ -1992,11 +1992,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4072579919208393031, guid: 1ad36781bcfcf9b479852fcab1ac93e6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.2
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 4072579919208393031, guid: 1ad36781bcfcf9b479852fcab1ac93e6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.2
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 4072579919208393031, guid: 1ad36781bcfcf9b479852fcab1ac93e6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4910,10 +4910,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 290491504035393434, guid: f07ad71d926d01c46af4cba14c25c401, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1357015111461512091, guid: f07ad71d926d01c46af4cba14c25c401, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.092886
@@ -5038,14 +5034,14 @@ PrefabInstance:
       propertyPath: _countTEXT
       value: 
       objectReference: {fileID: 8563635246585656601}
-    - target: {fileID: 3376573797433370900, guid: f07ad71d926d01c46af4cba14c25c401, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4013519702688338391, guid: f07ad71d926d01c46af4cba14c25c401, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 4878280029130258038, guid: f07ad71d926d01c46af4cba14c25c401, type: 3}
+      propertyPath: BackGlound
+      value: 
+      objectReference: {fileID: 33824805}
+    - target: {fileID: 4878280029130258038, guid: f07ad71d926d01c46af4cba14c25c401, type: 3}
+      propertyPath: difficulty
+      value: 
+      objectReference: {fileID: 11400000, guid: 892370a3ba652e24daaadcc1e9f0049a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5442,6 +5438,10 @@ PrefabInstance:
       propertyPath: _hpIcon
       value: 
       objectReference: {fileID: 8066313769109057493}
+    - target: {fileID: 3101156292235671804, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
+      propertyPath: _bombIcon
+      value: 
+      objectReference: {fileID: 8058845189994594988}
     - target: {fileID: 3101156292235671804, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
       propertyPath: m_Enabled
       value: 1

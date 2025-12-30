@@ -44,10 +44,13 @@ public class PlayerScripts : MonoBehaviour
     private GameObject _playerbullet;
     [SerializeField, Header("HPIcon")]
     private GameObject _hpIcon;
+    [SerializeField, Header("BOMEIcon")]
+    private GameObject _bombIcon;
     [SerializeField, Header("SE")]
     private AudioClip[] _sound;
     AudioSource _audioSource;
     private HPIcon _hpicon;
+    private BOOMIcon _boomicon;
     private Vector2 _inputVelocity;
     private Rigidbody2D _rigid;
     private SpriteRenderer _spriteRenderer;
@@ -89,6 +92,7 @@ public class PlayerScripts : MonoBehaviour
         not = false;
         _inputVelocity = Vector2.zero;
         _hpicon = _hpIcon.GetComponent<HPIcon>();
+        _boomicon=_bombIcon.GetComponent<BOOMIcon>();
         bullet = _playerbullet.GetComponent<Bullet>();
         _rigid = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -110,12 +114,29 @@ public class PlayerScripts : MonoBehaviour
         {
             Infinity();
         }
+        Muteki=false;
         _shootingMode = ShootingMode.A1;
         _powercount = 0;
-        _PowerLevel = 0;
-        _boom = 2;
+        _PowerLevel = 1;
+        if(_boom<2)
+        {
+        for(int i=0;i<2-_boom;i++)
+        {
+            _boom++;
+            _boomicon.BOOMUp();
+        }
+        }
+        if(_hp<5)
+        {
+        for(int i=0;i<5-_hp;i++)
+        {
+            _hp++;
+            _hpicon.HpUp();
+        }
+        }
         _power = 1;
-        _BshootCount = _BshootMaxCount;
+        _BshootCount = 4;
+        _BshootMaxCount=4;
         _levelPower = 10;
         bullet.ResetA(_power);
     }
@@ -318,11 +339,12 @@ public class PlayerScripts : MonoBehaviour
     public void Boomup()
     {
         _boomCount++;
-        if (_boomCount >= 50)
+        if (_boomCount >= 200)
         {
             _boomCount = 0;
             if (_boom >= 3) return;
             _boom++;
+            _boomicon.BOOMUp();
         }
     }
     public void HPUp()

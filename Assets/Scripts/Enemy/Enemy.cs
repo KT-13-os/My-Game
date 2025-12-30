@@ -105,14 +105,13 @@ public class Enemy : MonoBehaviour
         {
             if (_EnemyScale < 2.0f)
             {
-                Debug.Log("!!しょーわくせい!!");
             _mutekiTime = 1.2f;
                 DifficultyHP(1);
             }
         }
         if(_difficulty.StageNum==0)
         {
-            _ItemChance=8;
+            _ItemChance=6;
         }
         else
         {

@@ -367,6 +367,10 @@ public class BOSSA : BOSS
             //     _H = 1f;
             // _attackMode = AttackMode.A4;
             _attackMode = AttackMode.A;
+            foreach(GameObject bullet in GameObject.FindGameObjectsWithTag("bullet"))
+            {
+            Destroy(bullet);
+            }
             subGameManager = GameManager.GetComponent<SubGameManager>();
             subGameManager.Count();
             _moveMode = MoveMode.M4;
@@ -518,7 +522,7 @@ public void ChangePhase(int INT)
         else if (INT == 1)
         {
             _attackMode =AttackMode.A4;
-            MARUconfig(5, 5, 0.2f, 0.4f, 4, 6,5,5);
+            MARUconfig(5, 5, 0.2f, 0.42f, 4, 6,5,5);
             _C = 3.6f;
             _E = 3f;
             _G = 1.5f;

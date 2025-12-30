@@ -21,6 +21,10 @@ public class Glazecircle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(_player==null)
+        {
+            Destroy(this.gameObject);
+        }
         if (transform.position == _player.transform.position) return;
         transform.position = _player.transform.position;
     }

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1357015111461512091}
+  - component: {fileID: 4878280029130258038}
   - component: {fileID: 1931546673521562818}
   - component: {fileID: 2455083849925291210}
   - component: {fileID: 290491504035393434}
@@ -36,6 +37,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4878280029130258038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2304610260040706541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e48ef0d5e5acf44ab3404b1f0036a1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackGloundSprite:
+  - {fileID: 21300000, guid: 3166c69edc3db4d4da01ada77c84f9d8, type: 3}
+  - {fileID: 21300000, guid: fea3b9b57e5d390449c6ed94f04da701, type: 3}
+  BackGlound: {fileID: 0}
 --- !u!114 &1931546673521562818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48,6 +65,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42e8ced755c873d40be4f157b65eb822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputfield: {fileID: 0}
+  _Title: {fileID: 0}
+  _infinityButton: {fileID: 0}
+  _infinityPanel: {fileID: 0}
+  _infinityYesButton: {fileID: 0}
+  _infinityNoButton: {fileID: 0}
   messageText: {fileID: 0}
   _player: {fileID: 0}
   _deadEffectTimeScale: 0.5
