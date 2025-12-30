@@ -51,11 +51,15 @@ public class BOSS : MonoBehaviour
     private float mY;
     private float TX;
     private bool puras;
+    private Renderer _renderer;
+    private Color defaultcolor;
     int _Gcount;
     void Awake()
     {
         _attack = false;
         // _Gcount = 0;
+        _renderer=GetComponent<Renderer>();
+        defaultcolor=_renderer.material.color;;
         _audioSource = gameObject.GetComponent<AudioSource>();
         gamemanager = GameManager.GetComponent<GameManager>();
         _rigid = GetComponent<Rigidbody2D>();
@@ -244,9 +248,9 @@ public class BOSS : MonoBehaviour
     // }
     protected IEnumerator Damage()
     {
-        _spriteRenderer.sprite = _damageSprite;
+        _renderer.material.color=new Color32(255,132,132,255);
         yield return new WaitForSeconds(_damageEffectTime);
-        _spriteRenderer.sprite = _defaultSprite;
+        _renderer.material.color = defaultcolor;
     }
 protected void Phase()
 {
