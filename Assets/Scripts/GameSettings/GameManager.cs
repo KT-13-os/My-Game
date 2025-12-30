@@ -433,14 +433,17 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator CHANGEBACKGLOUND(int MODE)
     {
+        if(MODE==0)
+        {
         BGM[0].Stop();
-        if (_Sdifficulty.DIFFICULTY == "Easy" || _Sdifficulty.DIFFICULTY == "Normal")
+        if (_Sdifficulty.DIFFICULTY == "Easy" || _Sdifficulty.DIFFICULTY == "Normal"|| _Sdifficulty.DIFFICULTY == "VeryEasy")
         {
             BGM[1].Play();
         }
         else if(_Sdifficulty.DIFFICULTY=="Hard")
         {
             BGM[2].Play();
+        }
         }
         for(int i=0;i<80;i++)
         {
