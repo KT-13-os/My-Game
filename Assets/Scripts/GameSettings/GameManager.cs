@@ -311,8 +311,8 @@ public class GameManager : MonoBehaviour
     public void SETExplanation()
     {
         _explanation.SetActive(true);
-        StartCoroutine(animationManager.ButtonMove(_infinityButton,"EXIT",1000));
-        StartCoroutine(animationManager.ButtonMove(_Buttons,"EXIT",-300));
+        StartCoroutine(animationManager.ButtonMove(_infinityButton,"EXIT",1100));
+        StartCoroutine(animationManager.ButtonMove(_Buttons,"EXIT",-225));
         _Title.SetActive(false);
     }
     public void OKExplanation()
@@ -323,9 +323,9 @@ public class GameManager : MonoBehaviour
             _textpanel = _enemyBUTTON.GetComponent<TEXTPANEL>();
             return;
         }
-        StartCoroutine(animationManager.ButtonMove(_infinityButton,"ENTER",620));
+        StartCoroutine(animationManager.ButtonMove(_infinityButton,"ENTER",645));
         _Title.SetActive(true);
-        StartCoroutine(animationManager.ButtonMove(_Buttons,"ENTER",160));
+        StartCoroutine(animationManager.ButtonMove(_Buttons,"ENTER",80));
     }
     public void StartButton()
     {
@@ -340,16 +340,16 @@ public class GameManager : MonoBehaviour
     }
     public void MenuSTART()//Menu画面で使う用
     {
-        StartCoroutine(animationManager.ButtonMove(_Buttons,"EXIT",-300));
-        StartCoroutine(animationManager.ButtonMove(_difficulty,"ENTER",160));
-        StartCoroutine(animationManager.ButtonMove(_infinityButton,"EXIT",1000));
+        StartCoroutine(animationManager.ButtonMove(_Buttons,"EXIT",-225));
+        StartCoroutine(animationManager.ButtonMove(_difficulty,"ENTER",390));
+        StartCoroutine(animationManager.ButtonMove(_infinityButton,"EXIT",1100));
         Time.timeScale = 1;
     }
     public void MenuBackStart()//Menu画面で使う用
     {
-        StartCoroutine(animationManager.ButtonMove(_Buttons,"ENTER",160));
-        StartCoroutine(animationManager.ButtonMove(_difficulty,"EXIT",-300));
-        StartCoroutine(animationManager.ButtonMove(_infinityButton,"ENTER",620));
+        StartCoroutine(animationManager.ButtonMove(_Buttons,"ENTER",80));
+        StartCoroutine(animationManager.ButtonMove(_difficulty,"EXIT",-225));
+        StartCoroutine(animationManager.ButtonMove(_infinityButton,"ENTER",645));
         Time.timeScale = 1;
     }
     public void MenuButton()
@@ -384,22 +384,22 @@ public class GameManager : MonoBehaviour
     public void PlayerInfinityOn()
     {
         _infinityPanel.SetActive(true);
-        StartCoroutine(animationManager.ButtonMove(_infinityButton,"EXIT",1000));
-        StartCoroutine(animationManager.ButtonMove(_Buttons,"EXIT",-300));
+        StartCoroutine(animationManager.ButtonMove(_infinityButton,"EXIT",1100));
+        StartCoroutine(animationManager.ButtonMove(_Buttons,"EXIT",-225));
     }
     public void PlayerInfinityYes()
     {
         _Sdifficulty.PlayerInfinity="INFINITY";
         _infinityPanel.SetActive(false);
-        StartCoroutine(animationManager.ButtonMove(_infinityButton,"ENTER",620));
-        StartCoroutine(animationManager.ButtonMove(_Buttons,"ENTER",160));
+        StartCoroutine(animationManager.ButtonMove(_infinityButton,"ENTER",645));
+        StartCoroutine(animationManager.ButtonMove(_Buttons,"ENTER",80));
     }
     public void PlayerInfinityNo()
     {
         _Sdifficulty.PlayerInfinity=" ";
         _infinityPanel.SetActive(false);
-        StartCoroutine(animationManager.ButtonMove(_infinityButton,"ENTER",620));
-        StartCoroutine(animationManager.ButtonMove(_Buttons,"ENTER",160));
+        StartCoroutine(animationManager.ButtonMove(_infinityButton,"ENTER",645));
+        StartCoroutine(animationManager.ButtonMove(_Buttons,"ENTER",80));
     }
     private void Pause()
     {

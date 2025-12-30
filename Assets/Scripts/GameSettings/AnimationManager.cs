@@ -39,15 +39,15 @@ public class AnimationManager : MonoBehaviour
     }
     private IEnumerator buttonmove(string MODE,int X)
     {
-            if(MODE=="ENTER")
-            {
-                rectTransform.DOMove(new Vector3(X,rectTransform.position.y,0),1.3f);
-                yield break;
-            }
-            else if(MODE=="EXIT")
-            {
-                rectTransform.DOMove(new Vector3(X,rectTransform.position.y,0),1.3f);
-                yield break;
-            }
+        if(MODE=="ENTER")
+        {
+            rectTransform.DOAnchorPos(new Vector3(X,rectTransform.anchoredPosition.y,0),1.3f);
+            yield break;
+        }
+        else if(MODE=="EXIT")
+        {
+            rectTransform.DOAnchorPos(new Vector3(X,rectTransform.anchoredPosition.y,0),1.3f);
+            yield break;
+        }
     }
 }
