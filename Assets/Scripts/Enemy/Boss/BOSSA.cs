@@ -142,7 +142,7 @@ public class BOSSA : BOSS
         transform.position = new Vector2(-3, y + 2.5f);
         if (_hp <= _PhaseHP)
         {
-            if (_difficulty.DIFFICULTY == "Easy")
+            if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="VeryEasy")
             {
                 _PhaseHP = -100000000000;
             }
@@ -296,7 +296,7 @@ public class BOSSA : BOSS
         _shootCount += Time.deltaTime;
         _bshootCount += Time.deltaTime;
         ChangeCount += Time.deltaTime;
-        if(ChangeCount>=2)
+        if(ChangeCount>=1)
         {
             if(_difficulty.DIFFICULTY=="Hard")
             {
@@ -358,7 +358,7 @@ public class BOSSA : BOSS
         TIME();
         if (_hp <= 0)
         {
-            if (_difficulty.DIFFICULTY == "Easy" || _difficulty.DIFFICULTY == "Normal")
+            if (_difficulty.DIFFICULTY == "Easy" || _difficulty.DIFFICULTY == "Normal"|| _difficulty.DIFFICULTY == "VeryEasy")
             { _attackMode = AttackMode.A;return; }
             // MARUconfig(5, 5, 0.2f, 0.4f, 4, 6);
             //     _C = 3.6f;
