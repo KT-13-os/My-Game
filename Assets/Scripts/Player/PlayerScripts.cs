@@ -111,10 +111,6 @@ public class PlayerScripts : MonoBehaviour
     public void START()
     {
         PowerBurstCheck();
-        if (Tutorial == true||_difficulty.PlayerInfinity=="INFINITY")
-        {
-            Infinity();
-        }
         Muteki=false;
         _shootingMode = ShootingMode.A1;
         _powercount = 0;
@@ -140,6 +136,10 @@ public class PlayerScripts : MonoBehaviour
         _BshootMaxCount=4;
         _levelPower = 10;
         bullet.ResetA(_power);
+        if (Tutorial == true||_difficulty.PlayerInfinity=="INFINITY")
+        {
+            Infinity();
+        }
     }
     private void PowerBurstCheck()
     {

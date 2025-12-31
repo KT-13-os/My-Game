@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class BOSSB : BOSS
 {
+    private int _circleBulletNum;
+    private float _circleBulletAngle;
+    private float _Bulletspeed;
+    private float _InSpeed;
+    private float _shootTime;
+    private int _shootNum;
     float MHP;
     enum AttackMode
     {
@@ -13,6 +19,10 @@ public class BOSSB : BOSS
         A1,
         A2,
         A3,
+        A4,
+        A5,
+        A6,
+        A7,
     }
     private AttackMode _attackMode;
     enum MoveMode
@@ -27,9 +37,17 @@ public class BOSSB : BOSS
     private GameObject[] _wall;
     protected override void Initialize()
     {
+        _attack=true;
         _moveMode = MoveMode.M;
-        _attackMode = AttackMode.A;
+        _attackMode = AttackMode.A1;
         MHP = _hp;
+        _InSpeed=1;
+        _Bulletspeed=4;
+        _shootNum=0;
+        _shootCount=0;
+        _shootTime=0.3f;
+        _circleBulletNum=13;
+        _circleBulletAngle=90;
     }
     protected override void UpdateA()
     {
@@ -41,13 +59,13 @@ public class BOSSB : BOSS
     }
     protected override void Move()
     {
-        switch (_moveMode)
-        {
-            case MoveMode.M: M(); break;
-            case MoveMode.M1: M1(); break;
-            case MoveMode.M2: M2(); break;
-            case MoveMode.M3: M3(); break;
-        }
+        // switch (_moveMode)
+        // {
+        //     case MoveMode.M: M(); break;
+        //     case MoveMode.M1: M1(); break;
+        //     case MoveMode.M2: M2(); break;
+        //     case MoveMode.M3: M3(); break;
+        // }
     }
     private void M()
     {
@@ -90,12 +108,18 @@ public class BOSSB : BOSS
     }
     protected override void Attack()
     {
+        _shootCount+=Time.deltaTime;
+        if(_shootCount<_shootTime)return;
         switch (_attackMode)
         {
             case AttackMode.A: A(); break;
             case AttackMode.A1: A1(); break;
             case AttackMode.A2: A2(); break;
             case AttackMode.A3: A3(); break;
+            case AttackMode.A4: A4(); break;
+            case AttackMode.A5: A5(); break;
+            case AttackMode.A6: A6(); break;
+            case AttackMode.A7: A7(); break;
         }
     }
     private void A()
@@ -103,11 +127,52 @@ public class BOSSB : BOSS
     }
     private void A1()
     {
+        MARU();
+    }
+    private void MARU()
+    {
+        for (int i = 0; i < _circleBulletNum; i++)
+        {
+            float angleRange = Mathf.Deg2Rad * 360f;
+            float theta = angleRange / (_circleBulletNum-1) * i - Mathf.Deg2Rad * (_circleBulletAngle + 360f / 2f);
+            GameObject bullet = Instantiate(_bullet[0]);
+            Bullet shootbullet = bullet.GetComponent<Bullet>();
+            shootbullet.Speed(_Bulletspeed);
+            shootbullet.KasokuCahange(_Bulletspeed/2);
+            shootbullet.MoveChange(5,this.gameObject);
+            shootbullet.RcfSSTIME(7f);
+            shootbullet.RcfStopTime(0f);
+            bullet.transform.position = transform.position;
+            Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
+            bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
+        }
+        _circleBulletAngle+=360/_circleBulletNum;
+        _shootTime=0.3f;
+        if(_Bulletspeed>=4.8f)
+        {
+            _Bulletspeed=4;
+            _shootTime=1.5f;
+            _circleBulletAngle+=(360/_circleBulletNum)*3;
+        }
+        _shootCount=0;
+        _Bulletspeed+=0.2f;
     }
     private void A2()
     {
     }
     private void A3()
+    {
+    }
+    private void A4()
+    {
+    }
+    private void A5()
+    {
+    }
+    private void A6()
+    {
+    }
+    private void A7()
     {
     }
 }
