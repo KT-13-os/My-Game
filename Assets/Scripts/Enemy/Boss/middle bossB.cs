@@ -11,9 +11,12 @@ public class middlebossB : Enemy
     private float A1BulletSpeed;
     [SerializeField, Header("円形に弾を発射する間隔")]
     private float _shootAngle;
-    [SerializeField, Header("円形に弾を発射する間隔")]
+    [SerializeField, Header("Playerを補足するオブジェクト")]
     private GameObject TARGETobject;
     private GameObject TARGET;
+    [SerializeField, Header("予告線を引くオブジェクト")]
+    private GameObject Lineobject;
+    private GameObject Line;
     private int _BulletCount;
     //プレイヤーを中心に呼び出す円の半径
     private float _bulletdistance;
@@ -42,6 +45,7 @@ public class middlebossB : Enemy
     {
         PlayBullet=false;
         TARGET=Instantiate(TARGETobject);
+        Line=Instantiate(Lineobject);
         DIFFICULTYcheak();
         _bulletdistance=3;
         _BulletCount=0;
@@ -290,7 +294,7 @@ public class middlebossB : Enemy
         }
         _shootCount=0;
         _shootTime=3;
-        StartCoroutine(BEEM());
+        StartCoroutine(BEAM());
         if(_beemCount>=_beemCountmax)
         {
         _beemCount=0;
@@ -301,11 +305,11 @@ public class middlebossB : Enemy
         StartCoroutine(PlayerMARU(1));
         }
     }
-    private IEnumerator BEEM()
+    private IEnumerator BEAM()
     {
         TARGET.transform.position=gameObject.transform.position;
-        Linerenderscript linerenderscript=TARGET.GetComponent<Linerenderscript>();
-        StartCoroutine(linerenderscript.middleBossBLine(_beemNum,_beemAngle));
+        Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
+        StartCoroutine(linerenderscript.CircleLine(_beemNum,_beemAngle));
         yield return new WaitForSeconds(1f);
         for (int i=0;i<_beemNum;i++)
         {
@@ -313,6 +317,7 @@ public class middlebossB : Enemy
             float theta = angleRange / _beemNum * i - Mathf.Deg2Rad * (_beemAngle + 360f / 2f);
             GameObject bullet = Instantiate(_bullet[3]);
             Beem _beem = bullet.GetComponent<Beem>();
+            StartCoroutine(_beem.BEEMSUMMON(1));
             bullet.transform.position = transform.position+new Vector3(Mathf.Cos(theta)*6.2f,Mathf.Sin(theta)*6.2f,0);
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);

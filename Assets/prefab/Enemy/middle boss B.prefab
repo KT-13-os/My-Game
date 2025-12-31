@@ -133,6 +133,7 @@ MonoBehaviour:
   A1BulletSpeed: 2
   _shootAngle: 90
   TARGETobject: {fileID: 7672351060056756782, guid: ce4f09ae19a929a4b87737ba9a506768, type: 3}
+  Lineobject: {fileID: 4497108393343207070, guid: e1d4a982ebc0dc94d8a8d699ef435be9, type: 3}
 --- !u!50 &8280468357412177365
 Rigidbody2D:
   serializedVersion: 4

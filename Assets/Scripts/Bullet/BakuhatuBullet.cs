@@ -122,6 +122,10 @@ public class BakuhatuBullet : MonoBehaviour
     {
         CirclerotateaNum = A;
     }
+    public void ChangeCircleAngle(float A)
+    {
+        CircleAngle=A;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
