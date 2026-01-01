@@ -239,7 +239,6 @@ MonoBehaviour:
   GameManager: {fileID: 34620978}
   TARGETobject: {fileID: 7672351060056756782, guid: ce4f09ae19a929a4b87737ba9a506768, type: 3}
   Lineobject: {fileID: 4497108393343207070, guid: e1d4a982ebc0dc94d8a8d699ef435be9, type: 3}
-  _wall: []
 --- !u!1 &34620978 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2304610260040706541, guid: f07ad71d926d01c46af4cba14c25c401, type: 3}

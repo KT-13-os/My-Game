@@ -20,7 +20,7 @@ public class Linerenderscript : MonoBehaviour
         _lineRenderer.startWidth=0.05f;
         _lineRenderer.endWidth=0.05f;
     }
-    public IEnumerator CircleLine(int MARUnum,int Angle)
+    public IEnumerator CircleLine(int MARUnum,float Angle)
     {
         lineNUM=0;
         _lineRenderer.positionCount=MARUnum*2;
@@ -32,7 +32,7 @@ public class Linerenderscript : MonoBehaviour
             _lineRenderer.SetPosition(lineNUM++,this.gameObject.transform.position+new Vector3(Mathf.Cos(theta)*10,Mathf.Sin(theta)*10,0));
             _lineRenderer.SetPosition(lineNUM++,this.gameObject.transform.position);
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.9f);
         _lineRenderer.positionCount=0;
     }
     public IEnumerator TargetLine(int BEAMnum,Vector3 Pos,GameObject TARGET,GameObject TargetObj)

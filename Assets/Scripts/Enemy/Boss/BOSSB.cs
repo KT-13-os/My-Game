@@ -12,23 +12,25 @@ public class BOSSB : BOSS
     [SerializeField, Header("予告線を引くオブジェクト")]
     private GameObject Lineobject;
     private GameObject Line;
+    private GameObject Beam;
     private int _BulletNum;
     private float _circleBulletAngle;
     private float _Bulletspeed;
     private float _shootTime;
     private int _beamNum;
+    private float _beamAngle;
     private int _shootnum;
     float MHP;
     enum AttackMode
     {
         A,
-        A1,
-        A2,
-        A3,
-        A4,
-        A5,
-        A6,
-        A7,
+        NORMAL,
+        NORMAL2,
+        SPELL1,
+        SPELL2,
+        SPELL3,
+        SPELL4,
+        SPELL5,
     }
     private AttackMode _attackMode;
     enum MoveMode
@@ -39,30 +41,19 @@ public class BOSSB : BOSS
         M3,
     }
     private MoveMode _moveMode;
-    [SerializeField, Header("wall")]
-    private GameObject[] _wall;
     protected override void Initialize()
     {
-        _shootnum=5;
+        _shootnum=0;
         TARGET=Instantiate(TARGETobject);
         Line=Instantiate(Lineobject);
         _attack=true;
         _moveMode = MoveMode.M;
-        _attackMode = AttackMode.A2;
+        _attackMode = AttackMode.NORMAL2;
         MHP = _hp;
         _Bulletspeed=4;
         _shootCount=0;
-        _shootTime=4f;//0.3f
-        _BulletNum=13;
+        _shootTime=3f;
         _circleBulletAngle=90;
-    }
-    protected override void UpdateA()
-    {
-        _shootCount += Time.deltaTime;
-        if (_hp <= 0)
-        {
-            _attackMode = AttackMode.A;
-        }
     }
     protected override void Move()
     {
@@ -78,12 +69,8 @@ public class BOSSB : BOSS
     {
         if (transform.position.y <= 3.5f)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                _wall[i].SetActive(true);
-            }
             _moveMode = MoveMode.M1;
-            _attackMode = AttackMode.A1;
+            _attackMode = AttackMode.A;
         }
         else
         {
@@ -99,7 +86,7 @@ public class BOSSB : BOSS
         if (_hp <= MHP * 2 / 3)
         {
             _moveMode = MoveMode.M2;
-            _attackMode = AttackMode.A2;
+            _attackMode = AttackMode.A;
         }
     }
     private void M2()
@@ -107,7 +94,7 @@ public class BOSSB : BOSS
         if (_hp <= MHP * 1 / 3)
         {
             _moveMode = MoveMode.M2;
-            _attackMode = AttackMode.A2;
+            _attackMode = AttackMode.A;
         }
     }
     private void M3()
@@ -120,13 +107,13 @@ public class BOSSB : BOSS
         switch (_attackMode)
         {
             case AttackMode.A: A(); break;
-            case AttackMode.A1: NORMAL(); break;
-            case AttackMode.A2: NORMAL2(); break;
-            case AttackMode.A3: A3(); break;
-            case AttackMode.A4: A4(); break;
-            case AttackMode.A5: A5(); break;
-            case AttackMode.A6: A6(); break;
-            case AttackMode.A7: A7(); break;
+            case AttackMode.NORMAL: NORMAL(); break;
+            case AttackMode.NORMAL2: NORMAL2(); break;
+            case AttackMode.SPELL1: SPELL1(); break;
+            case AttackMode.SPELL2: SPELL2(); break;
+            case AttackMode.SPELL3: SPELL3(); break;
+            case AttackMode.SPELL4: SPELL4(); break;
+            case AttackMode.SPELL5: SPELL5(); break;
         }
     }
     private void A()
@@ -134,6 +121,7 @@ public class BOSSB : BOSS
     }
     private void NORMAL()
     {
+        _BulletNum=13;
         MARU();
     }
     private void MARU()
@@ -166,6 +154,12 @@ public class BOSSB : BOSS
     }
     private void NORMAL2()
     {
+        _attackMode=AttackMode.SPELL1;
+        _beamNum=6;
+        _beamAngle=45;
+        StartCoroutine(CROSSBEAM(27,15));
+        _shootTime=6f;
+        return;
         _shootTime=2f;
         _BulletNum=4;
         _beamNum=5;
@@ -216,19 +210,69 @@ public class BOSSB : BOSS
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
         }
     }
-    private void A3()
+    private void SPELL1()
+    {
+        _shootnum++;
+        _shootCount=0;
+        if(_shootnum>15)
+        {
+        _beamNum=4;
+        _beamAngle=60;
+        _shootTime=2.5f;
+        if(_shootnum==26)
+        {
+         _attackMode=AttackMode.NORMAL;
+         _shootnum=0;
+         return;
+        }
+        StartCoroutine(CROSSBEAM(1f,-6));
+        return;
+        }
+        if(_shootnum==15)
+        {
+        _shootTime=2.5f;
+        _beamNum=6;
+        _beamAngle=90;
+        StartCoroutine(CROSSBEAM(28,20));
+        return;
+        }
+        _shootTime=2;
+        _beamNum=4;
+        _beamAngle=45;
+        StartCoroutine(CROSSBEAM(1.6f,24));
+    }
+    private IEnumerator CROSSBEAM(float TIME,float RotationSpeed)
+    {
+        Vector2 Dis=transform.position-_player.transform.position;
+        float Angle=Mathf.Atan2(Dis.x,Dis.y)*Mathf.Rad2Deg;
+        Line.transform.position=new Vector3(-2.5f,0);
+        Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
+        StartCoroutine(linerenderscript.CircleLine(_beamNum,_beamAngle+Angle));
+        yield return new WaitForSeconds(0.8f);
+        for(int i=0;i<_beamNum;i++)
+        {
+            float angleRange = Mathf.Deg2Rad * 360f;
+            float theta = angleRange / _beamNum * i - Mathf.Deg2Rad * (_beamAngle +Angle+ 360f / 2f);
+            Beam = Instantiate(_bullet[1]);
+            Beem _beem = Beam.GetComponent<Beem>();
+            StartCoroutine(_beem.BEEMSUMMON(TIME));
+            StartCoroutine(_beem.BEAMRotation(TIME,RotationSpeed,Line));
+            Beam.transform.position = Line.transform.position+new Vector3(Mathf.Cos(theta)*12.6f,Mathf.Sin(theta)*12.6f,0);
+            Vector3 dir = Line.transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - Line.transform.position;
+            Beam.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
+            Beam.transform.rotation=Quaternion.Euler(0,0,Beam.transform.rotation.eulerAngles.z+90);
+        }
+    }
+    private void SPELL2()
     {
     }
-    private void A4()
+    private void SPELL3()
     {
     }
-    private void A5()
+    private void SPELL4()
     {
     }
-    private void A6()
-    {
-    }
-    private void A7()
+    private void SPELL5()
     {
     }
 }

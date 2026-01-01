@@ -288,7 +288,7 @@ public class middlebossB : Enemy
         if(_hp<=0)
         {
             _attackMode=AttackMode.A;
-            Linerenderscript linerenderscript=TARGET.GetComponent<Linerenderscript>();
+            Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
             linerenderscript.STOPline();
             return;
         }
@@ -318,7 +318,7 @@ public class middlebossB : Enemy
             GameObject bullet = Instantiate(_bullet[3]);
             Beem _beem = bullet.GetComponent<Beem>();
             StartCoroutine(_beem.BEEMSUMMON(1));
-            bullet.transform.position = transform.position+new Vector3(Mathf.Cos(theta)*6.2f,Mathf.Sin(theta)*6.2f,0);
+            bullet.transform.position = transform.position+new Vector3(Mathf.Cos(theta)*10f,Mathf.Sin(theta)*10f,0);
             Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
             bullet.transform.rotation=Quaternion.Euler(0,0,bullet.transform.rotation.eulerAngles.z+90);
