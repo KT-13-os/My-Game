@@ -20,6 +20,9 @@ public class BOSSB : BOSS
     private int _beamNum;
     private float _beamAngle;
     private int _shootnum;
+    private float _spellTime;
+    private float _spellCount;
+    private bool PlaySpell;
     float MHP;
     enum AttackMode
     {
@@ -43,12 +46,16 @@ public class BOSSB : BOSS
     private MoveMode _moveMode;
     protected override void Initialize()
     {
+        PlaySpell=false;
+        _spellCount=0;
+        _spellTime=60;
         _shootnum=0;
         TARGET=Instantiate(TARGETobject);
         Line=Instantiate(Lineobject);
+        Line.transform.position=new Vector3(-2.5f,0);
         _attack=true;
         _moveMode = MoveMode.M;
-        _attackMode = AttackMode.NORMAL2;
+        _attackMode = AttackMode.SPELL2;
         MHP = _hp;
         _Bulletspeed=4;
         _shootCount=0;
@@ -102,6 +109,7 @@ public class BOSSB : BOSS
     }
     protected override void Attack()
     {
+        if(PlaySpell==true)_spellCount+=Time.deltaTime;
         _shootCount+=Time.deltaTime;
         if(_shootCount<_shootTime)return;
         switch (_attackMode)
@@ -210,7 +218,7 @@ public class BOSSB : BOSS
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
         }
     }
-    private void SPELL1()
+    private void SPELL1()//回転するビームがうざいSPELL(耐久型)
     {
         _shootnum++;
         _shootCount=0;
@@ -232,27 +240,24 @@ public class BOSSB : BOSS
         {
         _shootTime=2.5f;
         _beamNum=6;
-        _beamAngle=90;
+        _beamAngle=Random.Range(60,105);
         StartCoroutine(CROSSBEAM(28,20));
         return;
         }
         _shootTime=2;
         _beamNum=4;
-        _beamAngle=45;
+        _beamAngle=Random.Range(45,90);
         StartCoroutine(CROSSBEAM(1.6f,24));
     }
     private IEnumerator CROSSBEAM(float TIME,float RotationSpeed)
     {
-        Vector2 Dis=transform.position-_player.transform.position;
-        float Angle=Mathf.Atan2(Dis.x,Dis.y)*Mathf.Rad2Deg;
-        Line.transform.position=new Vector3(-2.5f,0);
         Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
-        StartCoroutine(linerenderscript.CircleLine(_beamNum,_beamAngle+Angle));
+        StartCoroutine(linerenderscript.CircleLine(_beamNum,_beamAngle));
         yield return new WaitForSeconds(0.8f);
         for(int i=0;i<_beamNum;i++)
         {
             float angleRange = Mathf.Deg2Rad * 360f;
-            float theta = angleRange / _beamNum * i - Mathf.Deg2Rad * (_beamAngle +Angle+ 360f / 2f);
+            float theta = angleRange / _beamNum * i - Mathf.Deg2Rad * (_beamAngle + 360f / 2f);
             Beam = Instantiate(_bullet[1]);
             Beem _beem = Beam.GetComponent<Beem>();
             StartCoroutine(_beem.BEEMSUMMON(TIME));
@@ -263,8 +268,27 @@ public class BOSSB : BOSS
             Beam.transform.rotation=Quaternion.Euler(0,0,Beam.transform.rotation.eulerAngles.z+90);
         }
     }
-    private void SPELL2()
+    private void SPELL2()//洗濯機ブラスターみたいなや～つ(耐久)
     {
+        _shootCount=0;
+        _shootnum++;
+        if(_spellCount>=_spellTime)
+        {
+            _spellCount=0;
+            PlaySpell=false;
+            _attackMode=AttackMode.A;
+            return;
+        }
+        PlaySpell=true;
+        _beamNum=8;
+        _beamAngle=90+4*_shootnum;
+        StartCoroutine(CROSSBEAM(0.3f,0));
+        if(_shootTime<=0.18f)
+        {
+        _shootTime=0.18f;
+        return;
+        }
+        _shootTime=2-0.05f*_shootnum;
     }
     private void SPELL3()
     {
