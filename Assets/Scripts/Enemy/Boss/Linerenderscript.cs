@@ -35,7 +35,7 @@ public class Linerenderscript : MonoBehaviour
         yield return new WaitForSeconds(0.9f);
         _lineRenderer.positionCount=0;
     }
-    public IEnumerator TargetLine(int BEAMnum,Vector3 Pos,GameObject TARGET,GameObject TargetObj)
+    public IEnumerator TargetLine(int BEAMnum,Vector3 Pos,GameObject TARGET,GameObject TargetObj)//どっかのタイミングで中身変わります
     {
         float X=0;
         float Y=0;

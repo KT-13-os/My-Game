@@ -55,7 +55,7 @@ public class BOSSB : BOSS
         Line.transform.position=new Vector3(-2.5f,0);
         _attack=true;
         _moveMode = MoveMode.M;
-        _attackMode = AttackMode.SPELL2;
+        _attackMode = AttackMode.SPELL3;
         MHP = _hp;
         _Bulletspeed=4;
         _shootCount=0;
@@ -123,6 +123,7 @@ public class BOSSB : BOSS
             case AttackMode.SPELL4: SPELL4(); break;
             case AttackMode.SPELL5: SPELL5(); break;
         }
+        Debug.Log(_attackMode);
     }
     private void A()
     {
@@ -173,9 +174,9 @@ public class BOSSB : BOSS
         _beamNum=5;
         _shootCount=0;
         SakuretuOugi();
-        StartCoroutine(PlayerBEAM());
+        StartCoroutine(PlayerBEAM(1));
     }
-    private IEnumerator PlayerBEAM()
+    private IEnumerator PlayerBEAM(float TIME)
     {
         if(_shootnum<2)yield break;
         _shootnum=0;
@@ -186,7 +187,7 @@ public class BOSSB : BOSS
         {
             GameObject bullet = Instantiate(_bullet[1]);
             Beem _beem = bullet.GetComponent<Beem>();
-            StartCoroutine(_beem.BEEMSUMMON(1));
+            StartCoroutine(_beem.BEEMSUMMON(TIME));
             bullet.transform.position = TARGET.transform.position;
             Vector3 dir = new Vector3(transform.position.x+1.1f-(2.5f/_beamNum)*i,transform.position.y+0.4f,0) - TARGET.transform.position;
             bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
@@ -290,13 +291,13 @@ public class BOSSB : BOSS
         }
         _shootTime=2-0.05f*_shootnum;
     }
-    private void SPELL3()
+    private void SPELL3()//(耐久)
     {
     }
-    private void SPELL4()
+    private void SPELL4()//(SPELL)
     {
     }
-    private void SPELL5()
+    private void SPELL5()//(SPELL)
     {
     }
 }
