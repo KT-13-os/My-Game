@@ -9,6 +9,8 @@ public class BOSSB : BOSS
     [SerializeField, Header("Playerを補足するオブジェクト")]
     private GameObject TARGETobject;
     private GameObject TARGET;
+    [SerializeField, Header("タレットくん")]
+    private GameObject[] turret;
     [SerializeField, Header("予告線を引くオブジェクト")]
     private GameObject Lineobject;
     private GameObject Line;
@@ -23,6 +25,9 @@ public class BOSSB : BOSS
     private float _spellTime;
     private float _spellCount;
     private bool PlaySpell;
+    private float SummonX;
+    private float SummonY;
+    private int divideNum;
     float MHP;
     enum AttackMode
     {
@@ -51,11 +56,11 @@ public class BOSSB : BOSS
         _spellTime=60;
         _shootnum=0;
         TARGET=Instantiate(TARGETobject);
-        Line=Instantiate(Lineobject);
-        Line.transform.position=new Vector3(-2.5f,0);
+        // Line.transform.position=new Vector3(-2.5f,0);
         _attack=true;
         _moveMode = MoveMode.M;
         _attackMode = AttackMode.SPELL3;
+        AMIME();
         MHP = _hp;
         _Bulletspeed=4;
         _shootCount=0;
@@ -123,7 +128,6 @@ public class BOSSB : BOSS
             case AttackMode.SPELL4: SPELL4(); break;
             case AttackMode.SPELL5: SPELL5(); break;
         }
-        Debug.Log(_attackMode);
     }
     private void A()
     {
@@ -163,35 +167,32 @@ public class BOSSB : BOSS
     }
     private void NORMAL2()
     {
-        _attackMode=AttackMode.SPELL1;
-        _beamNum=6;
-        _beamAngle=45;
-        StartCoroutine(CROSSBEAM(27,15));
-        _shootTime=6f;
-        return;
+        // _attackMode=AttackMode.SPELL1;
+        // _beamNum=6;
+        // _beamAngle=45;
+        // Line=Instantiate(Lineobject);
+        // StartCoroutine(CROSSBEAM(27,15));
+        // _shootTime=6f;
+        // return;
         _shootTime=2f;
         _BulletNum=4;
         _beamNum=5;
         _shootCount=0;
         SakuretuOugi();
-        StartCoroutine(PlayerBEAM(1));
+        StartCoroutine(TURRETBEAM(1));
     }
-    private IEnumerator PlayerBEAM(float TIME)
+    private IEnumerator TURRETBEAM(float TIME)
     {
-        if(_shootnum<2)yield break;
+        if(_shootnum<3)yield break;
         _shootnum=0;
-        Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
-        StartCoroutine(linerenderscript.TargetLine(_beamNum,this.gameObject.transform.position,_player,TARGET));
-        yield return new WaitForSeconds(1.6f);
-        for (int i=0;i<_beamNum;i++)
+        for(int i=0;i<_BulletNum;i++)
         {
-            GameObject bullet = Instantiate(_bullet[1]);
-            Beem _beem = bullet.GetComponent<Beem>();
-            StartCoroutine(_beem.BEEMSUMMON(TIME));
-            bullet.transform.position = TARGET.transform.position;
-            Vector3 dir = new Vector3(transform.position.x+1.1f-(2.5f/_beamNum)*i,transform.position.y+0.4f,0) - TARGET.transform.position;
-            bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
-            bullet.transform.rotation=Quaternion.Euler(0,0,bullet.transform.rotation.eulerAngles.z+90);
+        float angleRange = Mathf.Deg2Rad * 360;
+        float theta = angleRange / _BulletNum  * i - Mathf.Deg2Rad * (90+ 360 / 2f);
+        GameObject TURRET=Instantiate(turret[0]);
+        TURRET.transform.position=new Vector3(Mathf.Sin(theta)*1.3f+gameObject.transform.position.x,Mathf.Cos(theta)*1.3f+gameObject.transform.position.y,0);
+        TurretScript archerScript=TURRET.GetComponent<TurretScript>();
+        StartCoroutine(archerScript.BeamSummon(TIME,_player,TARGET));
         }
     }
     private void SakuretuOugi()
@@ -207,7 +208,7 @@ public class BOSSB : BOSS
             Bullet shootbullet = bullet.GetComponent<Bullet>();
             BakuhatuBullet bakuhatuBullet=bullet.GetComponent<BakuhatuBullet>();
             bakuhatuBullet.ChangeCircleBuletNum(5);
-            bakuhatuBullet.ChangeBakuhatuTime(2);
+            bakuhatuBullet.ChangeBakuhatuTime(1.6f);
             bakuhatuBullet.ChangeCircleCount(1);
             bakuhatuBullet.ChangeCircleAngle(45*i);
             bakuhatuBullet.ChangeCircleRotate(false);
@@ -291,7 +292,23 @@ public class BOSSB : BOSS
         }
         _shootTime=2-0.05f*_shootnum;
     }
-    private void SPELL3()//(耐久)
+    private void SPELL3()//(耐久)x=-9~4.1y=-5~5
+    {
+    }
+    private void AMIME()
+    {
+        SummonY=5;
+        SummonX=-9;
+        divideNum=4;
+        _BulletNum=6;
+        for(int i=0;i<_BulletNum;i++)
+        {
+        GameObject bullet=Instantiate(_bullet[0]);
+        bullet.transform.position=new Vector3(SummonX,SummonY,0);
+        SummonY-=10/(_BulletNum-1);
+        }
+    }
+    private void AMIMEBEAM()
     {
     }
     private void SPELL4()//(SPELL)

@@ -238,6 +238,8 @@ MonoBehaviour:
   slider: {fileID: 816687433}
   GameManager: {fileID: 34620978}
   TARGETobject: {fileID: 7672351060056756782, guid: ce4f09ae19a929a4b87737ba9a506768, type: 3}
+  turret:
+  - {fileID: 8472949807476878573, guid: f7269ca0bc6105f4b86d2cd965b710da, type: 3}
   Lineobject: {fileID: 4497108393343207070, guid: e1d4a982ebc0dc94d8a8d699ef435be9, type: 3}
 --- !u!1 &34620978 stripped
 GameObject:

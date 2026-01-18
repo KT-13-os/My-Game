@@ -4,6 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Status")]
 public class Status : ScriptableObject
 {
-    [SerializeField, Header("Playerの弾の状態")]
-    public string PBulletStatus;
+    // [SerializeField, Header("Player")]
+    // public GameObject _player;
 }

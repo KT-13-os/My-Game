@@ -11,7 +11,7 @@ public class Linerenderscript : MonoBehaviour
 {
     private LineRenderer _lineRenderer;
     private int lineNUM;
-    void Start()
+    void Awake()
     {
         _lineRenderer=gameObject.GetComponent<LineRenderer>();
         _lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
@@ -35,49 +35,37 @@ public class Linerenderscript : MonoBehaviour
         yield return new WaitForSeconds(0.9f);
         _lineRenderer.positionCount=0;
     }
-    public IEnumerator TargetLine(int BEAMnum,Vector3 Pos,GameObject TARGET,GameObject TargetObj)//どっかのタイミングで中身変わります
+    public IEnumerator TargetLine(Vector3 Pos,GameObject TARGET,GameObject TARGETobject)
     {
         float X=0;
         float Y=0;
         float StartTime=Time.time;
-        while(Time.time-StartTime<1f)
+        while(Time.time-StartTime<1.2f)
         {
-        if(TargetObj.transform.position!=TARGET.transform.position)
-        TargetObj.transform.position=TARGET.transform.position;
-        lineNUM=0;
-        if(TargetObj.transform.position.y<=Pos.y)
+        if(TARGETobject.transform.position==TARGET.transform.position)yield return null;
+        TARGETobject.transform.position=TARGET.transform.position;
+        _lineRenderer.positionCount=2;
+        _lineRenderer.SetPosition(0,Pos);
+        if(Pos.y>=TARGETobject.transform.position.y)
         {
-            Y=Pos.y-TargetObj.transform.position.y;
+            Y=(Pos.y-TARGETobject.transform.position.y)*-1;
         }
         else
         {
-            Y=(TargetObj.transform.position.y-Pos.y)*-1;
+            Y=TARGETobject.transform.position.y-Pos.y;
         }
-        if(TargetObj.transform.position.x<=Pos.x)
+        if(Pos.x>=TARGETobject.transform.position.x)
         {
-            X=(Pos.x-TargetObj.transform.position.x)*-1;
+            X=(Pos.x-TARGETobject.transform.position.x)*-1;
         }
         else
         {
-            X=TargetObj.transform.position.x-Pos.x;
+            X=TARGETobject.transform.position.x-Pos.x;
         }
-        gameObject.transform.position=new Vector3(Pos.x+1.1f,Pos.y+0.4f,0);
-        _lineRenderer.positionCount=BEAMnum*3-1;
-        _lineRenderer.SetPosition(lineNUM,this.gameObject.transform.position);
-        for(int i=0;i<BEAMnum;i++)
-        {
-            _lineRenderer.SetPosition(lineNUM++,new Vector3(TargetObj.transform.position.x+(-1.1f+(2.5f/BEAMnum)*i)+X,TargetObj.transform.position.y-Y,0));
-            _lineRenderer.SetPosition(lineNUM++,this.gameObject.transform.position);
-            if(i>=BEAMnum-1)
-            {
-                break;
-            }
-            gameObject.transform.position-=new Vector3(2.5f/BEAMnum,0,0);
-            _lineRenderer.SetPosition(lineNUM++,this.gameObject.transform.position);
-        }
+        _lineRenderer.SetPosition(1,new Vector3(X*10-2.6f,Y*10,0));
         yield return null;
         }
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.5f);
         _lineRenderer.positionCount=0;
     }
     public void STOPline()
