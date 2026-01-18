@@ -35,6 +35,14 @@ public class Linerenderscript : MonoBehaviour
         yield return new WaitForSeconds(0.9f);
         _lineRenderer.positionCount=0;
     }
+    public IEnumerator straightLine(Vector3 Pos,Vector3 Summoner,float time)
+    {
+        _lineRenderer.positionCount=2;
+        _lineRenderer.SetPosition(0,Summoner);
+        _lineRenderer.SetPosition(1,Pos);
+        yield return new WaitForSeconds(time);
+        _lineRenderer.positionCount=0;
+    }
     public IEnumerator TargetLine(Vector3 Pos,GameObject TARGET,GameObject TARGETobject)
     {
         float X=0;

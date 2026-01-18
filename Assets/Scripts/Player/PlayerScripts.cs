@@ -245,7 +245,7 @@ public class PlayerScripts : MonoBehaviour
     {
         if (Muteki == true) return;
         if (not == true) return;
-        if (collision.gameObject.tag == "bullet" || collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "bullet" || collision.gameObject.tag == "Enemy"||collision.gameObject.tag=="Turret")
         {
             Hit(collision.gameObject);
         }
@@ -254,7 +254,7 @@ public class PlayerScripts : MonoBehaviour
     {
         if (not == true) return;
         if (Muteki == true) return;
-        if (collision.gameObject.tag == "bullet"|| collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "bullet"|| collision.gameObject.tag == "Enemy"||collision.gameObject.tag=="Turret")
         {
             Hit(collision.gameObject);
         }

@@ -27,7 +27,6 @@ public class BOSSB : BOSS
     private bool PlaySpell;
     private float SummonX;
     private float SummonY;
-    private int divideNum;
     float MHP;
     enum AttackMode
     {
@@ -60,7 +59,7 @@ public class BOSSB : BOSS
         _attack=true;
         _moveMode = MoveMode.M;
         _attackMode = AttackMode.SPELL3;
-        AMIME();
+        StartCoroutine(AMIME());
         MHP = _hp;
         _Bulletspeed=4;
         _shootCount=0;
@@ -295,17 +294,37 @@ public class BOSSB : BOSS
     private void SPELL3()//(耐久)x=-9~4.1y=-5~5
     {
     }
-    private void AMIME()
+    private IEnumerator AMIME()
     {
+
         SummonY=5;
         SummonX=-9;
-        divideNum=4;
-        _BulletNum=6;
-        for(int i=0;i<_BulletNum;i++)
+        _shootnum=0;
+        _BulletNum=4;
+        for(int i=0;i<_BulletNum+2;i++)
         {
+        GameObject TURRET=Instantiate(turret[0]);
+        TurretScript turretScript=TURRET.GetComponent<TurretScript>();
+        TURRET.transform.position=new Vector3(SummonX,SummonY,0);
+        StartCoroutine(turretScript.straightBeam(new Vector3(SummonX,-5,0),5f-0.5f*i,6));
+        for(int I=0;I<_BulletNum+1;I++)
+        {
+        if(_shootnum==0)
+        {
+        GameObject TURRET1=Instantiate(turret[0]);
+        TurretScript turretScript1=TURRET1.GetComponent<TurretScript>();
+        TURRET1.transform.position=new Vector3(SummonX,SummonY,0);
+        TURRET1.transform.rotation=Quaternion.Euler(0,0,TURRET1.transform.rotation.eulerAngles.z-90);
+        StartCoroutine(turretScript1.straightBeam(new Vector3(4,SummonY,0),4.5f-0.1f*I,6));
+        }
         GameObject bullet=Instantiate(_bullet[0]);
         bullet.transform.position=new Vector3(SummonX,SummonY,0);
         SummonY-=10/(_BulletNum-1);
+        yield return new WaitForSeconds(0.1f);
+        }
+        _shootnum++;
+        SummonY=5;
+        SummonX+=13/(_BulletNum-1);
         }
     }
     private void AMIMEBEAM()

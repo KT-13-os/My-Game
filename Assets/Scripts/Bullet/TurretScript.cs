@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using DG.Tweening;
+using Unity.Collections.LowLevel.Unsafe;
 public class TurretScript : MonoBehaviour
 {
     [SerializeField, Header("弾オブジェクト")]
@@ -11,11 +12,6 @@ public class TurretScript : MonoBehaviour
     private GameObject _line;
     [SerializeField, Header("死亡エフェクト")]
     protected GameObject _deadEffect;
-    Vector3 velocity;
-
-    Vector3 acceleration;
-
-    Transform target;
     public void BulletSummon(int BulletNumber,float BulletSpeed,float Bulletacceleration,int MoveMode,GameObject gameobject)
     {
         Bullet BULLET=_bullet[BulletNumber].GetComponent<Bullet>();
@@ -39,6 +35,25 @@ public class TurretScript : MonoBehaviour
         bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
         bullet.transform.rotation=Quaternion.FromToRotation(Vector3.up,-dir);
         bullet.transform.rotation=Quaternion.Euler(0,0,bullet.transform.rotation.eulerAngles.z+90);
+        yield return new WaitForSeconds(0.4f);
+        StartCoroutine(ExitMove());
+    }
+    public IEnumerator straightBeam(Vector3 Pos,float TIME,float time)
+    {
+        yield return new WaitForSeconds(TIME/2);
+        GameObject Line=Instantiate(_line);
+        Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
+        Line.transform.position=transform.position;
+        StartCoroutine(linerenderscript.straightLine(Pos,gameObject.transform.position,TIME));
+        yield return new WaitForSeconds(TIME);
+        GameObject Beam=Instantiate(_bullet[1]);
+        Beem beem=Beam.GetComponent<Beem>();
+        StartCoroutine(beem.BEEMSUMMON(time));
+        Beam.transform.position=Pos;
+        Vector3 dir = gameObject.transform.position - Pos;
+        Beam.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
+        Beam.transform.rotation=Quaternion.FromToRotation(Vector3.up,-dir);
+        Beam.transform.rotation=Quaternion.Euler(0,0,Beam.transform.rotation.eulerAngles.z-90);
         yield return new WaitForSeconds(0.4f);
         StartCoroutine(ExitMove());
     }
