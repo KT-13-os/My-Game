@@ -34,6 +34,7 @@ public class Linerenderscript : MonoBehaviour
         }
         yield return new WaitForSeconds(0.9f);
         _lineRenderer.positionCount=0;
+        Destroy(gameObject);
     }
     public IEnumerator straightLine(Vector3 Pos,Vector3 Summoner,float time)
     {
@@ -43,12 +44,12 @@ public class Linerenderscript : MonoBehaviour
         yield return new WaitForSeconds(time);
         _lineRenderer.positionCount=0;
     }
-    public IEnumerator TargetLine(Vector3 Pos,GameObject TARGET,GameObject TARGETobject)
+    public IEnumerator TargetLine(Vector3 Pos,GameObject TARGET,GameObject TARGETobject,float TIME)
     {
         float X=0;
         float Y=0;
         float StartTime=Time.time;
-        while(Time.time-StartTime<1.2f)
+        while(Time.time-StartTime<TIME)
         {
         if(TARGETobject.transform.position==TARGET.transform.position)yield return null;
         TARGETobject.transform.position=TARGET.transform.position;
@@ -73,8 +74,9 @@ public class Linerenderscript : MonoBehaviour
         _lineRenderer.SetPosition(1,new Vector3(X*10-2.6f,Y*10,0));
         yield return null;
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds((TIME/3)*2);
         _lineRenderer.positionCount=0;
+        Destroy(gameObject);
     }
     public void STOPline()
     {

@@ -22,6 +22,7 @@ public class BOSSA : BOSS
     float _mutekiCount;
     int _a;
     float _bTime;
+    private int _phaseCount;
     private float _circleShootCount;
     private float _OLDcircleBulletTime;
     private float _OLDcircleBulletTime2;
@@ -372,8 +373,9 @@ public class BOSSA : BOSS
             Destroy(bullet);
             }
             subGameManager = GameManager.GetComponent<SubGameManager>();
-            subGameManager.Count();
+            subGameManager.Count(80);
             _moveMode = MoveMode.M4;
+            _phaseCount=0;
             ChangePhase(0);
             Phase();
         }
@@ -409,6 +411,17 @@ public class BOSSA : BOSS
     }
     private void A4()
     {
+        if(subGameManager.GetCount()<40)
+        {
+            if(_phaseCount>=1)return;
+            _phaseCount++;
+            ChangePhase(1);
+        }
+        else if(subGameManager.GetCount()<=0)
+        {
+            ChangePhase(10);
+        return;
+        }
         _shootCount += Time.deltaTime;
         _shootCount2 += Time.deltaTime;
         MARU();

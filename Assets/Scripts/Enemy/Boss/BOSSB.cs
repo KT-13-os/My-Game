@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class BOSSB : BOSS
 {
@@ -13,6 +14,8 @@ public class BOSSB : BOSS
     private GameObject[] turret;
     [SerializeField, Header("予告線を引くオブジェクト")]
     private GameObject Lineobject;
+    [SerializeField, Header("GlobaLight2D")]
+    private GameObject GlobalLight2D;
     private GameObject Line;
     private GameObject Beam;
     private int _BulletNum;
@@ -27,6 +30,8 @@ public class BOSSB : BOSS
     private bool PlaySpell;
     private float SummonX;
     private float SummonY;
+    private float _bulletdistance;
+    private float _distanceNum;
     float MHP;
     enum AttackMode
     {
@@ -58,8 +63,11 @@ public class BOSSB : BOSS
         // Line.transform.position=new Vector3(-2.5f,0);
         _attack=true;
         _moveMode = MoveMode.M;
-        _attackMode = AttackMode.SPELL3;
-        StartCoroutine(AMIME());
+        _attackMode = AttackMode.SPELL4;
+        // SubGameManager subGameManager = GameManager.GetComponent<SubGameManager>();
+        // subGameManager.Count(60);
+        _bulletdistance=3;
+        _distanceNum=-0.1f;
         MHP = _hp;
         _Bulletspeed=4;
         _shootCount=0;
@@ -291,47 +299,196 @@ public class BOSSB : BOSS
         }
         _shootTime=2-0.05f*_shootnum;
     }
-    private void SPELL3()//(耐久)x=-9~4.1y=-5~5
+    private void SPELL3()//(耐久)x=-8.9~4.1y=-5~5
     {
+        _shootCount=0;
+        if(_spellCount>=_spellTime)
+        {
+            _spellCount=0;
+            PlaySpell=false;
+            _attackMode=AttackMode.A;
+            return;
+        }
+        PlaySpell=true;
+        StartCoroutine(AMIME());
+    }
+    private IEnumerator BlackOut()
+    {
+        Light2D light2D=GlobalLight2D.GetComponent<Light2D>();
+        for(int i=0;i<51;i++)
+        {
+            light2D.color-=new Color32(5,5,5,0);
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+    private IEnumerator BlackIn()
+    {
+        Light2D light2D=GlobalLight2D.GetComponent<Light2D>();
+        for(int i=0;i<255;i++)
+        {
+            light2D.color+=new Color32(1,1,1,0);
+            yield return new WaitForSeconds(0.013f);
+        }
     }
     private IEnumerator AMIME()
     {
-
+        StartCoroutine(BlackOut());
         SummonY=5;
         SummonX=-9;
-        _shootnum=0;
-        _BulletNum=4;
-        for(int i=0;i<_BulletNum+2;i++)
+        if(_shootnum>=4)StartCoroutine(BlackIn());yield break;
+        if(_shootnum==0)
+        {
+        _shootTime=15;
+        _BulletNum=6;
+        }
+        else if(_shootnum==1)
+        {
+        _shootTime=14;
+        _BulletNum=7;
+        }
+        else if(_shootnum==2)
+        {
+        _shootTime=13;
+            _BulletNum=7;
+        }
+        else if(_shootnum==3)
+        {
+            _shootTime=15;
+            _BulletNum=8;
+        }
+        for(int i=0;i<Mathf.CeilToInt(13f/(10f/(_BulletNum-1))+1);i++)
         {
         GameObject TURRET=Instantiate(turret[0]);
         TurretScript turretScript=TURRET.GetComponent<TurretScript>();
         TURRET.transform.position=new Vector3(SummonX,SummonY,0);
-        StartCoroutine(turretScript.straightBeam(new Vector3(SummonX,-5,0),5f-0.5f*i,6));
-        for(int I=0;I<_BulletNum+1;I++)
+        StartCoroutine(turretScript.straightBeam(new Vector3(SummonX,-5,0),4.5f-0.5f*i,5.2f));
+        for(int I=0;I<_BulletNum;I++)
         {
-        if(_shootnum==0)
+        if(i==0)
         {
         GameObject TURRET1=Instantiate(turret[0]);
         TurretScript turretScript1=TURRET1.GetComponent<TurretScript>();
         TURRET1.transform.position=new Vector3(SummonX,SummonY,0);
         TURRET1.transform.rotation=Quaternion.Euler(0,0,TURRET1.transform.rotation.eulerAngles.z-90);
-        StartCoroutine(turretScript1.straightBeam(new Vector3(4,SummonY,0),4.5f-0.1f*I,6));
+        StartCoroutine(turretScript1.straightBeam(new Vector3(4,SummonY,0),4.5f-0.3f*I,5.2f));
         }
         GameObject bullet=Instantiate(_bullet[0]);
+        Bullet bulletsc=bullet.GetComponent<Bullet>();
+        bulletsc.SetNumber(1);
         bullet.transform.position=new Vector3(SummonX,SummonY,0);
-        SummonY-=10/(_BulletNum-1);
-        yield return new WaitForSeconds(0.1f);
+        SummonY-=10f/(_BulletNum-1);
+        yield return new WaitForSeconds(0.06f);
+        }
+        SummonY=5;
+        SummonX+=13f/Mathf.CeilToInt(13f/(10f/(_BulletNum-1)));
+        }
+        yield return new WaitForSeconds(6f);
+        GameObject[] Bullets=GameObject.FindGameObjectsWithTag("bullet");
+        foreach(GameObject BULLET in Bullets)
+        {
+            Bullet bulletsc=BULLET.GetComponent<Bullet>();
+            if(bulletsc==null)continue;
+            if(bulletsc.GetNumber()==1)
+            {
+                bulletsc.Speed(0.3f);
+                bulletsc.KasokuCahange(0.1f);
+                bulletsc.MoveChange(3,gameObject);
+                BULLET.transform.rotation=Quaternion.FromToRotation(transform.up,BULLET.transform.position-_player.transform.position);
+                BULLET.transform.rotation=Quaternion.Euler(0,0,BULLET.transform.rotation.eulerAngles.z+Random.Range(-240,-90));
+            }
         }
         _shootnum++;
-        SummonY=5;
-        SummonX+=13/(_BulletNum-1);
-        }
-    }
-    private void AMIMEBEAM()
-    {
+        yield return new WaitForSeconds(4f);
+        StartCoroutine(BlackIn());
     }
     private void SPELL4()//(SPELL)
     {
+        StartCoroutine(PerforatedCircleBullet());
+        PlayerMARU();
+    }
+    private IEnumerator PerforatedCircleBullet()
+    {
+        if(_shootnum==30||_shootnum==60)
+        {
+        _BulletNum=4;
+        for(int I=0;I<_BulletNum;I++)
+        {
+        for (int i = 0; i < 4; i++)
+        {
+            float angleRange = Mathf.Deg2Rad * 360f;
+            float theta = angleRange / 4 * i - Mathf.Deg2Rad * (_circleBulletAngle + 360f / 2f);
+            GameObject bullet = Instantiate(_bullet[3]);
+            Bullet shootbullet = bullet.GetComponent<Bullet>();
+            shootbullet.Speed(3);
+            shootbullet.KasokuCahange(-3/3);
+            shootbullet.MoveChange(1,this.gameObject);
+            bullet.transform.position = transform.position;
+            Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
+            bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
+        }
+        _circleBulletAngle+=(360/(5*2))/_BulletNum;
+        }
+        }
+        if(_shootnum>=90)
+        {
+            _shootnum=15;
+            for(int i=0;i<3;i++)
+            {
+            Line=Instantiate(Lineobject);
+            Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
+            StartCoroutine(linerenderscript.TargetLine(transform.position,_player,TARGET=Instantiate(TARGETobject),1f));
+            StartCoroutine(BEAM());
+            yield return new WaitForSeconds(1.5f);
+            }
+        }
+    }
+    private IEnumerator BEAM()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Beam = Instantiate(_bullet[1]);
+        Beem _beem = Beam.GetComponent<Beem>();
+        StartCoroutine(_beem.BEEMSUMMON(0.6f));
+        Beam.transform.position = TARGET.transform.position;
+        Vector3 dir = TARGET.transform.position-transform.position;
+        Beam.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
+        Beam.transform.rotation=Quaternion.Euler(0,0,Beam.transform.rotation.eulerAngles.z+90);
+    }
+    private void PlayerMARU()
+    {
+        _shootTime=0.1f;
+        _BulletNum=6;
+        _shootCount=0;
+        _shootnum++;
+        for(int I=0;I<2;I++)
+        {
+        for (int i = 0; i < _BulletNum; i++)
+        {
+            float angleRange = Mathf.Deg2Rad * 360f;
+            float theta = angleRange / _BulletNum * i - Mathf.Deg2Rad * (_circleBulletAngle+(-90*I) + 360f / 2f);
+            GameObject bullet = Instantiate(_bullet[0]);
+            Bullet shootbullet = bullet.GetComponent<Bullet>();
+            shootbullet.SetNumber(10);
+            shootbullet.Speed(0);
+            shootbullet.KasokuCahange(0f);
+            shootbullet.MoveChange(0,this.gameObject);
+            bullet.transform.position = _player.transform.position+new Vector3(Mathf.Cos(theta)*_bulletdistance,Mathf.Sin(theta)*_bulletdistance,0);
+            Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
+            bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
+        }
+        _circleBulletAngle+=3;
+        _BulletNum=4;
+        _bulletdistance+=1.5f;
+        }
+        _bulletdistance-=3;
+        if(_bulletdistance>4f)
+        {
+            _distanceNum*=-1;
+        }
+        else if(_bulletdistance<1.3f)
+        {
+            _distanceNum*=-1;
+        }
+        _bulletdistance+=_distanceNum;
     }
     private void SPELL5()//(SPELL)
     {

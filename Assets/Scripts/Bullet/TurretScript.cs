@@ -24,7 +24,7 @@ public class TurretScript : MonoBehaviour
     {
         GameObject Line=Instantiate(_line);
         Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
-        StartCoroutine(linerenderscript.TargetLine(gameObject.transform.position,TARGET,TARGETobject));
+        StartCoroutine(linerenderscript.TargetLine(gameObject.transform.position,TARGET,TARGETobject,TIME));
         StartCoroutine(RotateTurret(1.5f,TARGET));
         yield return new WaitForSeconds(1.6f);
         GameObject bullet = Instantiate(_bullet[1]);
@@ -35,6 +35,7 @@ public class TurretScript : MonoBehaviour
         bullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
         bullet.transform.rotation=Quaternion.FromToRotation(Vector3.up,-dir);
         bullet.transform.rotation=Quaternion.Euler(0,0,bullet.transform.rotation.eulerAngles.z+90);
+        Destroy(Line);
         yield return new WaitForSeconds(0.4f);
         StartCoroutine(ExitMove());
     }
@@ -44,8 +45,8 @@ public class TurretScript : MonoBehaviour
         GameObject Line=Instantiate(_line);
         Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
         Line.transform.position=transform.position;
-        StartCoroutine(linerenderscript.straightLine(Pos,gameObject.transform.position,TIME));
-        yield return new WaitForSeconds(TIME);
+        StartCoroutine(linerenderscript.straightLine(Pos,gameObject.transform.position,TIME/9*5));
+        yield return new WaitForSeconds(TIME/3*2);
         GameObject Beam=Instantiate(_bullet[1]);
         Beem beem=Beam.GetComponent<Beem>();
         StartCoroutine(beem.BEEMSUMMON(time));

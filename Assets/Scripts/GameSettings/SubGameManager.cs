@@ -14,7 +14,6 @@ public class SubGameManager : MonoBehaviour
     private BOSSA BOSSA;
     private float _count;
     private bool COUNTDOWN = false;
-    private int PhaseCount;
     [SerializeField, Header("DIFFICULTY")]
     protected Difficulty _difficulty;
     public void VeryEasyButton()
@@ -36,8 +35,6 @@ public class SubGameManager : MonoBehaviour
     void Start()
     {
         gameManager = gameObject.GetComponent<GameManager>();
-        PhaseCount = 0;
-        _count = 80;
     }
     void Update()
     {
@@ -46,22 +43,20 @@ public class SubGameManager : MonoBehaviour
         if (_count < 0)
         {
             COUNTDOWN = false;
-            BOSSA.ChangePhase(10);
             _countTEXT.text = "";
             return;
         }
         _countTEXT.text = _count.ToString("f1");
-        if(_count<40)
-        {
-            if (PhaseCount >= 1) return;
-            PhaseCount++;
-            BOSSA.ChangePhase(1);
-        }
     }
-    public void Count()
+    public void Count(float COUNT)
     {
+        _count=COUNT;
         BOSSA = BOSS.GetComponent<BOSSA>();
         COUNTDOWN = true;
+    }
+    public float GetCount()
+    {
+        return _count;
     }
     public void CountStop()
     {

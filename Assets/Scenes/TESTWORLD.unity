@@ -225,6 +225,7 @@ MonoBehaviour:
   - {fileID: 6274632669645906559, guid: 04e5fadfb1876a3409c0851f52910c6d, type: 3}
   - {fileID: 9110545054515617581, guid: 34c0a8ae249416749842c48b396606ea, type: 3}
   - {fileID: 3338375639557933969, guid: 948ba153701279448b3db3167fcb76b5, type: 3}
+  - {fileID: 3338375639557933969, guid: 35b6829216b241b45b247674898cfe78, type: 3}
   _Speed: 2
   _damageEffectTime: 0.1
   _damageSprite: {fileID: 0}
@@ -241,6 +242,7 @@ MonoBehaviour:
   turret:
   - {fileID: 8472949807476878573, guid: f7269ca0bc6105f4b86d2cd965b710da, type: 3}
   Lineobject: {fileID: 4497108393343207070, guid: e1d4a982ebc0dc94d8a8d699ef435be9, type: 3}
+  GlobalLight2D: {fileID: 1463732534}
 --- !u!1 &34620978 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2304610260040706541, guid: f07ad71d926d01c46af4cba14c25c401, type: 3}
@@ -664,6 +666,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 113170709514262211, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
+      propertyPath: m_Color.b
+      value: 0.41509432
+      objectReference: {fileID: 0}
+    - target: {fileID: 113170709514262211, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
+      propertyPath: m_Color.g
+      value: 0.41509432
+      objectReference: {fileID: 0}
+    - target: {fileID: 113170709514262211, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
+      propertyPath: m_Color.r
+      value: 0.41509432
+      objectReference: {fileID: 0}
+    - target: {fileID: 113170709514262211, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 2.6
+      objectReference: {fileID: 0}
     - target: {fileID: 1228588907470139176, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9
@@ -709,21 +727,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 638587421}
     - target: {fileID: 3101156292235671804, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
-      propertyPath: _hpIcon
-      value: 
-      objectReference: {fileID: 3911528827031382772, guid: f4ede585bb4ab4e4b8b0e40e02bd5278, type: 3}
-    - target: {fileID: 3101156292235671804, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
-      propertyPath: Tutorial
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3101156292235671804, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
       propertyPath: _bombIcon
       value: 
       objectReference: {fileID: 240008549}
-    - target: {fileID: 3101156292235671804, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
-      propertyPath: _difficulty
-      value: 
-      objectReference: {fileID: 11400000, guid: 892370a3ba652e24daaadcc1e9f0049a, type: 2}
     - target: {fileID: 3101156292235671804, guid: 09d440f6e4174024d9284feded7f185b, type: 3}
       propertyPath: _GameManager
       value: 
@@ -935,7 +941,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2048117467
-  m_SortingLayer: -3
+  m_SortingLayer: -4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fea3b9b57e5d390449c6ed94f04da701, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1045,7 +1051,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: dbca137aad5e1c27a56c7f3900000000e5bf1216
+  m_ApplyToSortingLayers: ad5e1c273307784fa56c7f3900000000e5bf1216dbca137a
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1099,6 +1105,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1715455000 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4058663423903123469, guid: 613cea601c4ac7040aab32636acfaed4, type: 3}
+  m_PrefabInstance: {fileID: 305604024}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1924271220
@@ -1197,6 +1214,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2455083849925291210, guid: f07ad71d926d01c46af4cba14c25c401, type: 3}
+      propertyPath: BOSS
+      value: 
+      objectReference: {fileID: 19427920}
+    - target: {fileID: 2455083849925291210, guid: f07ad71d926d01c46af4cba14c25c401, type: 3}
+      propertyPath: _countTEXT
+      value: 
+      objectReference: {fileID: 1715455000}
     - target: {fileID: 4013519702688338391, guid: f07ad71d926d01c46af4cba14c25c401, type: 3}
       propertyPath: m_Enabled
       value: 0

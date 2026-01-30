@@ -37,10 +37,9 @@ public class Bullet : MonoBehaviour
     private float _MutekiCount;
     GameObject _player;
     private SpriteRenderer spriteRenderer;
-    [SerializeField, Header("ダメージSprite")]
-    private Sprite _defaultSprite;
-    private Sprite _damageSprite;
+
     protected bool StopMove = false;
+    private float MoveCount;
     private GameObject Summoner;
     private int _number;
     private MoveMode _moveMode;
@@ -70,12 +69,12 @@ public class Bullet : MonoBehaviour
             _player = GameObject.Find("Player");
         }
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        _defaultSprite = spriteRenderer.sprite;
         spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);
         _rigid = GetComponent<Rigidbody2D>();
         _Time = 0.5f;
         _Mspeed = 0f;
         _MutekiCount = 0;
+        MoveCount = 0;
         _boundCount = 0;
         CountTime = 0;
         CheckNumber();
@@ -92,6 +91,11 @@ public class Bullet : MonoBehaviour
     }
     void Update()
     {
+        if(_number==10)
+        {
+            MoveCount+=Time.deltaTime;
+            if(MoveCount>=1.3f)Destroy(gameObject);
+        }
         _MutekiCount += Time.deltaTime;
         Move();
         UpdateA();

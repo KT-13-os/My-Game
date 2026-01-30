@@ -114,7 +114,7 @@ public class TESTBOSS : BOSS
                 // G = 1.5f;
                 // H = 1f;
                 // CountUp = 0;
-                subGameManager.Count();
+                // subGameManager.Count();
                 ChangePhase(0);
             }
             else
