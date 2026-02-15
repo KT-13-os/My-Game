@@ -10,6 +10,8 @@ public class BOSSB : BOSS
     [SerializeField, Header("Playerを補足するオブジェクト")]
     private GameObject TARGETobject;
     private GameObject TARGET;
+    [SerializeField, Header("bossBOME")]
+    private GameObject BOME;
     [SerializeField, Header("タレットくん")]
     private GameObject[] turret;
     [SerializeField, Header("予告線を引くオブジェクト")]
@@ -32,7 +34,7 @@ public class BOSSB : BOSS
     private float SummonY;
     private float _bulletdistance;
     private float _distanceNum;
-    float MHP;
+    private string nextSPELL;
     enum AttackMode
     {
         A,
@@ -51,6 +53,10 @@ public class BOSSB : BOSS
         M1,
         M2,
         M3,
+        M4,
+        M5,
+        M6,
+        M7,
     }
     private MoveMode _moveMode;
     protected override void Initialize()
@@ -63,61 +69,177 @@ public class BOSSB : BOSS
         // Line.transform.position=new Vector3(-2.5f,0);
         _attack=true;
         _moveMode = MoveMode.M;
-        _attackMode = AttackMode.SPELL4;
         // SubGameManager subGameManager = GameManager.GetComponent<SubGameManager>();
         // subGameManager.Count(60);
+        DifficultyHP(3);
+        nextSPELL="SPELL1";
         _bulletdistance=3;
         _distanceNum=-0.1f;
-        MHP = _hp;
         _Bulletspeed=4;
         _shootCount=0;
         _shootTime=3f;
         _circleBulletAngle=90;
     }
+    private void DifficultyHP(int _HP)
+    {
+        if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="VeryEasy")
+        {
+            _hp = _difficulty.easyBOSSHP[_HP];
+            _PhaseHP = (_hp/4)*3;
+        }
+        else if (_difficulty.DIFFICULTY == "Normal")
+        {
+            _hp = _difficulty.normalBOSSHP[_HP];
+            _PhaseHP = (_hp/5)*4;
+        }
+        else if (_difficulty.DIFFICULTY == "Hard")
+        {
+            _hp = _difficulty.hardBOSSHP[_HP];
+            _PhaseHP = (_hp/7)*6;
+        }
+        _Mhp = _hp;
+    }
     protected override void Move()
     {
-        // switch (_moveMode)
-        // {
-        //     case MoveMode.M: M(); break;
-        //     case MoveMode.M1: M1(); break;
-        //     case MoveMode.M2: M2(); break;
-        //     case MoveMode.M3: M3(); break;
-        // }
+        switch (_moveMode)
+        {
+            case MoveMode.M: M(); break;
+            case MoveMode.M1: M1(); break;
+            case MoveMode.M2: M2(); break;
+            case MoveMode.M3: M3(); break;
+            case MoveMode.M4: M4(); break;
+            case MoveMode.M5: M5(); break;
+            case MoveMode.M6: M6(); break;
+            case MoveMode.M7: M7(); break;
+        }
     }
     private void M()
     {
         if (transform.position.y <= 3.5f)
         {
             _moveMode = MoveMode.M1;
-            _attackMode = AttackMode.A;
+            _attackMode=AttackMode.NORMAL;
         }
         else
         {
             _rigid.velocity = Vector2.down * 2;
         }
     }
-    private void M1()
+    private void M1()//NORMAL
     {
-        var y = Mathf.PingPong(Time.time, 1);
+        if (_hp <= _PhaseHP)
+        {
+            if(_difficulty.DIFFICULTY=="VeryEasy"||_difficulty.DIFFICULTY=="Easy")
+            {
+                _PhaseHP=_Mhp/4*2;
+            }
+            else if(_difficulty.DIFFICULTY=="Normal")
+            {
+                _PhaseHP=_Mhp/5*3;
+            }
+            else if(_difficulty.DIFFICULTY=="Hard")
+            {
+                _PhaseHP=_Mhp/7*5;
+            }
+            _beamNum=6;
+            _beamAngle=45;
+            _shootTime=6f;
+            _moveMode = MoveMode.M2;
+            StartCoroutine(SpellChange());
+            SpriteRenderer spriteRenderer=GetComponent<SpriteRenderer>();
+            spriteRenderer.color=new Color32(255,255,255,100);
+            Collider2D collider2D=GetComponent<PolygonCollider2D>();
+            collider2D.enabled=false;
+        }
+    }
+    private void M2()//SPELL1
+    {
+    }
+    private void M3()//SPELL4
+    {
+        if(_hp<=_PhaseHP)
+        {
+            if(_difficulty.DIFFICULTY=="VeryEasy"||_difficulty.DIFFICULTY=="Easy")
+            {
+                _PhaseHP=0;
+            }
+            else if(_difficulty.DIFFICULTY=="Normal")
+            {
+                _PhaseHP=_Mhp/5*1;
+            }
+            else if(_difficulty.DIFFICULTY=="Hard")
+            {
+                _PhaseHP=_Mhp/7*3;
+            }
+            _moveMode = MoveMode.M4;
+            StartCoroutine(SpellChange());
+        }
+    }
+    private void M4()//SPELL5
+    {
+        if(_hp<=_PhaseHP)
+        {
+            if(_difficulty.DIFFICULTY=="Normal")
+            {
+                _PhaseHP=0;
+            }
+            else if(_difficulty.DIFFICULTY=="Hard")
+            {
+                _PhaseHP=_Mhp/7*2;
+            }
+            _moveMode = MoveMode.M5;
+            StartCoroutine(SpellChange());
+        }
+    }
+    private void M5()//NORMAL2
+    {
+        if(_hp<=_PhaseHP)
+        {
+            if(_difficulty.DIFFICULTY=="Normal")
+            {
+                _PhaseHP=0;
+            }
+            else if(_difficulty.DIFFICULTY=="Hard")
+            {
+                _PhaseHP=_Mhp/7*1;
+            }
+            _moveMode = MoveMode.M6;
+            StartCoroutine(SpellChange());
+            SpriteRenderer spriteRenderer=GetComponent<SpriteRenderer>();
+            spriteRenderer.color=new Color32(255,255,255,100);
+            Collider2D collider2D=GetComponent<PolygonCollider2D>();
+            collider2D.enabled=false;
+        }
+    }
+    private void M6()//SPELL2
+    {
 
-        // y座標を往復させて上下運動させる
-        transform.position = new Vector2(-3, y + 2.5f);
-        if (_hp <= MHP * 2 / 3)
+    }
+    private void M7()//SPELL3
+    {
+        if(_hp<=_PhaseHP)
         {
-            _moveMode = MoveMode.M2;
-            _attackMode = AttackMode.A;
+            _moveMode = MoveMode.M;
+            _attackMode=AttackMode.A;
         }
     }
-    private void M2()
+    private IEnumerator SpellChange()
     {
-        if (_hp <= MHP * 1 / 3)
-        {
-            _moveMode = MoveMode.M2;
-            _attackMode = AttackMode.A;
-        }
-    }
-    private void M3()
-    {
+        GameObject bome=Instantiate(BOME);
+        BOOM boom=bome.GetComponent<BOOM>();
+        bome.transform.position=gameObject.transform.position;
+        boom.BOOMScale(8,8);
+        yield return new WaitForSeconds(2.3f);
+            switch (nextSPELL)
+            {
+                case "NORMAL": _attackMode = AttackMode.NORMAL;nextSPELL="SPELL1"; break;//1
+                case "SPELL1": _attackMode = AttackMode.SPELL1;nextSPELL="SPELL4";StartCoroutine(CROSSBEAM(28,15));subGameManager.Count(60); break;//2
+                case "SPELL4": _attackMode = AttackMode.SPELL4;nextSPELL="SPELL5"; break;//3
+                case "SPELL5": _attackMode = AttackMode.SPELL5;nextSPELL="NORMAL2"; break;//4
+                case "NORMAL2": _attackMode = AttackMode.NORMAL2;nextSPELL="SPELL2"; break;//5
+                case "SPELL2": _attackMode = AttackMode.SPELL2;nextSPELL="SPELL3";subGameManager.Count(60); break;//6
+                case "SPELL3": _attackMode = AttackMode.SPELL3;_shootnum=0; break;//7
+            }
     }
     protected override void Attack()
     {
@@ -174,13 +296,6 @@ public class BOSSB : BOSS
     }
     private void NORMAL2()
     {
-        // _attackMode=AttackMode.SPELL1;
-        // _beamNum=6;
-        // _beamAngle=45;
-        // Line=Instantiate(Lineobject);
-        // StartCoroutine(CROSSBEAM(27,15));
-        // _shootTime=6f;
-        // return;
         _shootTime=2f;
         _BulletNum=4;
         _beamNum=5;
@@ -229,39 +344,63 @@ public class BOSSB : BOSS
     }
     private void SPELL1()//回転するビームがうざいSPELL(耐久型)
     {
-        _shootnum++;
         _shootCount=0;
-        if(_shootnum>15)
+        if(subGameManager.GetCount()<=30)
+        {
+        if(subGameManager.GetCount()<28)
         {
         _beamNum=4;
         _beamAngle=60;
         _shootTime=2.5f;
-        if(_shootnum==26)
+        if(subGameManager.CheckCount()==false)
         {
-         _attackMode=AttackMode.NORMAL;
+        if(_difficulty.DIFFICULTY=="VeryEasy"||_difficulty.DIFFICULTY=="Easy")
+        {
+            _hp-=_Mhp/4;
+            _slider.BeInjured(_Mhp/4);
+            _PhaseHP=_Mhp/4*1;
+        }
+        else if(_difficulty.DIFFICULTY=="Normal")
+        {
+            _hp-=_Mhp/5;
+            _slider.BeInjured(_Mhp/5);
+            _PhaseHP=_Mhp/5*2;
+        }
+        else if(_difficulty.DIFFICULTY=="Hard")
+        {
+            _hp-=_Mhp/7;
+            _slider.BeInjured(_Mhp/7);
+            _PhaseHP=_Mhp/7*4;
+        }
+        SpriteRenderer spriteRenderer=GetComponent<SpriteRenderer>();
+        spriteRenderer.color=new Color32(255,255,255,255);
+        Collider2D collider2D=GetComponent<PolygonCollider2D>();
+        collider2D.enabled=true;
+        _moveMode = MoveMode.M3;
+        StartCoroutine(SpellChange());
          _shootnum=0;
          return;
         }
-        StartCoroutine(CROSSBEAM(1f,-6));
+        StartCoroutine(CROSSBEAM(1f,-5));
         return;
         }
-        if(_shootnum==15)
-        {
         _shootTime=2.5f;
         _beamNum=6;
         _beamAngle=Random.Range(60,105);
         StartCoroutine(CROSSBEAM(28,20));
         return;
         }
-        _shootTime=2;
+        _shootTime=1.5f;
         _beamNum=4;
         _beamAngle=Random.Range(45,90);
-        StartCoroutine(CROSSBEAM(1.6f,24));
+        StartCoroutine(CROSSBEAM(1.3f,24));
     }
     private IEnumerator CROSSBEAM(float TIME,float RotationSpeed)
     {
+        Line=Instantiate(Lineobject);
+        Line.transform.position=new Vector3(-3,0,0);
         Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
-        StartCoroutine(linerenderscript.CircleLine(_beamNum,_beamAngle));
+        StartCoroutine(linerenderscript.CircleLine(_beamNum,_beamAngle,TIME));
         yield return new WaitForSeconds(0.8f);
         for(int i=0;i<_beamNum;i++)
         {
@@ -285,7 +424,12 @@ public class BOSSB : BOSS
         {
             _spellCount=0;
             PlaySpell=false;
-            _attackMode=AttackMode.A;
+            _PhaseHP=0;
+            _hp-=_Mhp/7;
+            _slider.BeInjured(_Mhp/7);
+            _PhaseHP=0;
+            _moveMode = MoveMode.M7;
+            StartCoroutine(SpellChange());
             return;
         }
         PlaySpell=true;
@@ -299,14 +443,19 @@ public class BOSSB : BOSS
         }
         _shootTime=2-0.05f*_shootnum;
     }
-    private void SPELL3()//(耐久)x=-8.9~4.1y=-5~5
+    private void SPELL3()//(SPELL)x=-8.9~4.1y=-5~5
     {
         _shootCount=0;
         if(_spellCount>=_spellTime)
         {
             _spellCount=0;
             PlaySpell=false;
-            _attackMode=AttackMode.A;
+            if(_difficulty.DIFFICULTY=="Hard")
+            {
+                _hp-=_Mhp/7;
+                _PhaseHP=0;
+            }
+            SpellChange();
             return;
         }
         PlaySpell=true;
@@ -335,7 +484,6 @@ public class BOSSB : BOSS
         StartCoroutine(BlackOut());
         SummonY=5;
         SummonX=-9;
-        if(_shootnum>=4)StartCoroutine(BlackIn());yield break;
         if(_shootnum==0)
         {
         _shootTime=15;
@@ -492,5 +640,6 @@ public class BOSSB : BOSS
     }
     private void SPELL5()//(SPELL)
     {
+        
     }
 }
