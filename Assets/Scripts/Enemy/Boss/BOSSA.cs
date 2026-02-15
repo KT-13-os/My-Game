@@ -102,8 +102,28 @@ public class BOSSA : BOSS
             _BakuhatushootTime = 3f;
             _boundshootTime = 4f;
         }
+        DifficultyHP(1);
         _moveMode = MoveMode.M;
         _attackMode = AttackMode.A;
+    }
+    private void DifficultyHP(int _HP)
+    {
+        if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="VeryEasy")
+        {
+            _hp = _difficulty.easyBOSSHP[_HP];
+            _PhaseHP = _hp/2;
+        }
+        else if (_difficulty.DIFFICULTY == "Normal")
+        {
+            _hp = _difficulty.normalBOSSHP[_HP];
+            _PhaseHP = (_hp/3)*2;
+        }
+        else if (_difficulty.DIFFICULTY == "Hard")
+        {
+            _hp = _difficulty.hardBOSSHP[_HP];
+            _PhaseHP = (_hp/3)*2;
+        }
+        _Mhp = _hp;
     }
     protected override void UpdateA()
     {

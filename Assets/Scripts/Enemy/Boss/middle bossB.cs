@@ -309,7 +309,7 @@ public class middlebossB : Enemy
     {
         TARGET.transform.position=gameObject.transform.position;
         Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
-        StartCoroutine(linerenderscript.CircleLine(_beemNum,_beemAngle));
+        StartCoroutine(linerenderscript.CircleLine(_beemNum,_beemAngle,1));
         yield return new WaitForSeconds(1f);
         for (int i=0;i<_beemNum;i++)
         {

@@ -10,6 +10,8 @@ public class BOOM : MonoBehaviour
     private GameObject[] _bullet;
     private float _ScaleX;
     private float _ScaleY;
+    [SerializeField, Header("BOSS?")]
+    private bool BOSS=false;
     enum BOOMMode
     {
         B1,
@@ -29,10 +31,21 @@ public class BOOM : MonoBehaviour
     }
     private IEnumerator BOOM1()
     {
-        transform.DOScale(new Vector3(_ScaleX,_ScaleY,0),1f).SetEase(Ease.Linear);
-        yield return new WaitForSeconds(3f);
-        transform.DOScale(new Vector3(0.1f,0.1f,0),1f).SetEase(Ease.Linear);
-        this.gameObject.SetActive(false);
+        if(BOSS==false)
+        {
+            transform.DOScale(new Vector3(_ScaleX,_ScaleY,0),1f).SetEase(Ease.Linear);
+            yield return new WaitForSeconds(3f);
+            transform.DOScale(new Vector3(0.1f,0.1f,0),1f).SetEase(Ease.Linear);
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            SpriteRenderer _spriterenderer=gameObject.GetComponent<SpriteRenderer>();
+            transform.DOScale(new Vector3(_ScaleX,_ScaleY,0),1f).SetEase(Ease.Linear);
+            yield return new WaitForSeconds(1f);
+            _spriterenderer.DOFade(0,0.3f);
+            Destroy(gameObject);
+        }
     }
     public void BOOMScale(float A,float B)
     {
@@ -43,21 +56,4 @@ public class BOOM : MonoBehaviour
             case BOOMMode.B1: B1(); break;
         }
     }
-    // private void Way3()
-    // {
-    //     for (int i = 0; i < 3; i++)
-    //     {
-    //         float angleRange = Mathf.Deg2Rad * 60f;
-    //         float theta = angleRange / 2 * i - Mathf.Deg2Rad * (30f / 2f);
-    //         GameObject shootbullet = Instantiate(_bullet[0]);
-    //         Bullet bullet = shootbullet.GetComponent<Bullet>();
-    //         bullet.MoveChange(3);
-    //         bullet.KasokuCahange(5);
-    //         bullet.Speed(15);
-    //         shootbullet.transform.position = transform.position;
-    //         Vector3 dir = transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta)) - transform.position;
-    //         shootbullet.transform.rotation = Quaternion.FromToRotation(transform.up, dir);
-    //     }
-    //     _ShootCount = 0;
-    // }
 }

@@ -67,7 +67,7 @@ public class BOSS : MonoBehaviour
         _defaultSprite = _spriteRenderer.sprite;
         _slider = slider.GetComponent<Slider>();
         _score = 1000000;
-        DifficultyHP(1);
+        Initialize();
     }
     void Start()
     {
@@ -78,26 +78,6 @@ public class BOSS : MonoBehaviour
         playerscripts = _player.GetComponent<PlayerScripts>();
         subGameManager = GameManager.GetComponent<SubGameManager>();
         _Gcount = 0;
-        Initialize();
-    }
-    protected virtual void DifficultyHP(int _HP)
-    {
-        if (_difficulty.DIFFICULTY == "Easy"||_difficulty.DIFFICULTY=="VeryEasy")
-        {
-            _hp = _difficulty.easyBOSSHP[_HP];
-            _PhaseHP = _hp/2;
-        }
-        else if (_difficulty.DIFFICULTY == "Normal")
-        {
-            _hp = _difficulty.normalBOSSHP[_HP];
-            _PhaseHP = (_hp/3)*2;
-        }
-        else if (_difficulty.DIFFICULTY == "Hard")
-        {
-            _hp = _difficulty.hardBOSSHP[_HP];
-            _PhaseHP = (_hp/3)*2;
-        }
-        _Mhp = _hp;
     }
     protected virtual void Initialize()
     {

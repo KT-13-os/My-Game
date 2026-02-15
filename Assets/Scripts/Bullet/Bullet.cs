@@ -356,7 +356,7 @@ public class Bullet : MonoBehaviour
     }
     private void SummonItems()
     {
-    for (int i = 0; i < ItemCount; i++)
+    for (int i = 0; i < Random.Range(0,2); i++)
     {
         GameObject powerItemObj = Instantiate(_Item[0]);
         powerItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));

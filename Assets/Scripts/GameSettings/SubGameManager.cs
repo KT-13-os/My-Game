@@ -58,6 +58,10 @@ public class SubGameManager : MonoBehaviour
     {
         return _count;
     }
+    public bool CheckCount()
+    {
+        return COUNTDOWN;
+    }
     public void CountStop()
     {
         _countTEXT.text = "";

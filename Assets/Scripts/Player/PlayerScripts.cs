@@ -310,7 +310,7 @@ public class PlayerScripts : MonoBehaviour
     // }
     public void Powerup1()
     {
-        if (_PowerLevel > 8) return;
+        if (_PowerLevel > 16) return;
         _powercount++;
         // _gameManager.LEVELPOWER(_powercount, _levelPower);
         if (_powercount >= _levelPower)
@@ -325,7 +325,7 @@ public class PlayerScripts : MonoBehaviour
             {
                 _powercount = 0;
             }
-            if (_PowerLevel >= 11f) return;
+            if (_PowerLevel >= 7f) return;
             if (_PowerLevel >= 3)
             {
                 _shootingMode = ShootingMode.A2;
@@ -333,7 +333,7 @@ public class PlayerScripts : MonoBehaviour
             }
             if (_PowerLevel >= 4)
             {
-                _BshootMaxCount = (_BshootMaxCount*5)/8;
+                _BshootMaxCount = (_BshootMaxCount*2)/3;
             }
         }
     }
@@ -351,7 +351,8 @@ public class PlayerScripts : MonoBehaviour
     public void HPUp()
     {
         if (_difficulty.DIFFICULTY == "Tutorial") return;
-        if(_hp>=8)return;
+        _gameManager.Score(100);
+        if(_hp>=16)return;
         _hp++;
         _hpicon.HpUp();
     }

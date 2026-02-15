@@ -20,7 +20,7 @@ public class Linerenderscript : MonoBehaviour
         _lineRenderer.startWidth=0.05f;
         _lineRenderer.endWidth=0.05f;
     }
-    public IEnumerator CircleLine(int MARUnum,float Angle)
+    public IEnumerator CircleLine(int MARUnum,float Angle,float TIME)
     {
         lineNUM=0;
         _lineRenderer.positionCount=MARUnum*2;
@@ -34,6 +34,7 @@ public class Linerenderscript : MonoBehaviour
         }
         yield return new WaitForSeconds(0.9f);
         _lineRenderer.positionCount=0;
+        yield return new WaitForSeconds(TIME+1);
         Destroy(gameObject);
     }
     public IEnumerator straightLine(Vector3 Pos,Vector3 Summoner,float time)
@@ -74,7 +75,7 @@ public class Linerenderscript : MonoBehaviour
         _lineRenderer.SetPosition(1,new Vector3(X*10-2.6f,Y*10,0));
         yield return null;
         }
-        yield return new WaitForSeconds((TIME/3)*2);
+        yield return new WaitForSeconds((TIME/3)*1);
         _lineRenderer.positionCount=0;
         Destroy(gameObject);
     }
