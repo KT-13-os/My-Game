@@ -249,23 +249,11 @@ protected void Phase()
 }
     public void AttackOK()
     {
-        _attack = true;
         gameObject.SetActive(true);
+        _attack = true;
     }
     public float GetHp()
     {
         return _hp;
-    }
-    public void START()
-    {
-        if(_difficulty.StageNum==1)
-        {
-        gameObject.GetComponent<BOSSA>().enabled=false;
-        gameObject.GetComponent<BOSSB>().enabled=true;
-        }
-        else if(_difficulty.StageNum==2)
-        {
-            gameObject.GetComponent<BOSSB>().enabled=false
-;        }
     }
 }

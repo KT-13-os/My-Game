@@ -131,7 +131,7 @@ public class PlayerScripts : MonoBehaviour
             _hpicon.HpUp();
         }
         }
-        _power = 1;
+        _power = 10;
         _BshootCount = 4;
         _BshootMaxCount=4;
         _levelPower = 10;

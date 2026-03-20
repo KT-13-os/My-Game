@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using Sequence=DG.Tweening.Sequence;
 
 public class BOSSB : BOSS
 {
@@ -35,6 +37,9 @@ public class BOSSB : BOSS
     private float _bulletdistance;
     private float _distanceNum;
     private string nextSPELL;
+    private bool _Movenow;
+    private Sequence MoveSequence;
+    private int MoveNum;
     enum AttackMode
     {
         A,
@@ -56,18 +61,18 @@ public class BOSSB : BOSS
         M4,
         M5,
         M6,
-        M7,
     }
     private MoveMode _moveMode;
     protected override void Initialize()
     {
+        MoveNum=1;
+        _Movenow=false;
         PlaySpell=false;
         _spellCount=0;
         _spellTime=60;
         _shootnum=0;
         TARGET=Instantiate(TARGETobject);
         // Line.transform.position=new Vector3(-2.5f,0);
-        _attack=true;
         _moveMode = MoveMode.M;
         // SubGameManager subGameManager = GameManager.GetComponent<SubGameManager>();
         // subGameManager.Count(60);
@@ -95,7 +100,7 @@ public class BOSSB : BOSS
         else if (_difficulty.DIFFICULTY == "Hard")
         {
             _hp = _difficulty.hardBOSSHP[_HP];
-            _PhaseHP = (_hp/7)*6;
+            _PhaseHP = (_hp/6)*5;
         }
         _Mhp = _hp;
     }
@@ -110,13 +115,13 @@ public class BOSSB : BOSS
             case MoveMode.M4: M4(); break;
             case MoveMode.M5: M5(); break;
             case MoveMode.M6: M6(); break;
-            case MoveMode.M7: M7(); break;
         }
     }
     private void M()
     {
         if (transform.position.y <= 3.5f)
         {
+            _rigid.velocity = Vector2.zero;
             _moveMode = MoveMode.M1;
             _attackMode=AttackMode.NORMAL;
         }
@@ -139,7 +144,7 @@ public class BOSSB : BOSS
             }
             else if(_difficulty.DIFFICULTY=="Hard")
             {
-                _PhaseHP=_Mhp/7*5;
+                _PhaseHP=_Mhp/6*4;
             }
             _beamNum=6;
             _beamAngle=45;
@@ -169,13 +174,13 @@ public class BOSSB : BOSS
             }
             else if(_difficulty.DIFFICULTY=="Hard")
             {
-                _PhaseHP=_Mhp/7*3;
+                _PhaseHP=_Mhp/6*2;
             }
             _moveMode = MoveMode.M4;
             StartCoroutine(SpellChange());
         }
     }
-    private void M4()//SPELL5
+    private void M4()//NORMAL2
     {
         if(_hp<=_PhaseHP)
         {
@@ -185,13 +190,21 @@ public class BOSSB : BOSS
             }
             else if(_difficulty.DIFFICULTY=="Hard")
             {
-                _PhaseHP=_Mhp/7*2;
+                _PhaseHP=_Mhp/6*1;
             }
             _moveMode = MoveMode.M5;
             StartCoroutine(SpellChange());
         }
+        if(_Movenow==false)
+        {
+            Vector3 position=transform.position;
+            _Movenow=true;
+            MoveSequence=DOTween.Sequence().Append(transform.DOMove(new Vector3(position.x+4*MoveNum,position.y+Random.Range(-0.8f,0.8f),0),Random.Range(2.5f,5f)))
+            .Append(transform.DOMove(position,Random.Range(2.5f,5f))).AppendInterval(0.3f).AppendCallback(() =>_Movenow=false);
+            MoveNum*=-1;
+        }
     }
-    private void M5()//NORMAL2
+    private void M5()//SPELL2
     {
         if(_hp<=_PhaseHP)
         {
@@ -201,7 +214,7 @@ public class BOSSB : BOSS
             }
             else if(_difficulty.DIFFICULTY=="Hard")
             {
-                _PhaseHP=_Mhp/7*1;
+                _PhaseHP=0;
             }
             _moveMode = MoveMode.M6;
             StartCoroutine(SpellChange());
@@ -211,34 +224,52 @@ public class BOSSB : BOSS
             collider2D.enabled=false;
         }
     }
-    private void M6()//SPELL2
+    private void M6()//SPELL3
     {
-
-    }
-    private void M7()//SPELL3
-    {
+        if(_Movenow==false)
+        {
+            Vector3 position=transform.position;
+            _Movenow=true;
+            MoveSequence=DOTween.Sequence().Append(transform.DOMove(new Vector3(position.x+4*MoveNum,position.y+Random.Range(-0.8f,0.8f),0),Random.Range(2.5f,5f)))
+            .Append(transform.DOMove(position,Random.Range(2.5f,5f))).AppendInterval(0.3f).AppendCallback(() =>_Movenow=false);
+            MoveNum*=-1;
+        }
         if(_hp<=_PhaseHP)
         {
+            _attack = false;
+            gamemanager.Score(_score);
+            _slider.DESTROY();
+            playerscripts.MUTEKI();
+            gamemanager.ClearEffect();
+            gameObject.SetActive(false);
             _moveMode = MoveMode.M;
             _attackMode=AttackMode.A;
         }
     }
+    // private void M7()
+    // {
+    // }
     private IEnumerator SpellChange()
     {
         GameObject bome=Instantiate(BOME);
         BOOM boom=bome.GetComponent<BOOM>();
         bome.transform.position=gameObject.transform.position;
         boom.BOOMScale(8,8);
+        // for(int i=0;i<3;i++)
+        // {
+        // GameObject HPUpItemObj = Instantiate(_Item[2]);
+        // HPUpItemObj.transform.position = new Vector2(gameObject.transform.position.x + Random.Range(0, 3), gameObject.transform.position.y + Random.Range(0, 3));
+        // }
         yield return new WaitForSeconds(2.3f);
             switch (nextSPELL)
             {
                 case "NORMAL": _attackMode = AttackMode.NORMAL;nextSPELL="SPELL1"; break;//1
                 case "SPELL1": _attackMode = AttackMode.SPELL1;nextSPELL="SPELL4";StartCoroutine(CROSSBEAM(28,15));subGameManager.Count(60); break;//2
-                case "SPELL4": _attackMode = AttackMode.SPELL4;nextSPELL="SPELL5"; break;//3
-                case "SPELL5": _attackMode = AttackMode.SPELL5;nextSPELL="NORMAL2"; break;//4
-                case "NORMAL2": _attackMode = AttackMode.NORMAL2;nextSPELL="SPELL2"; break;//5
-                case "SPELL2": _attackMode = AttackMode.SPELL2;nextSPELL="SPELL3";subGameManager.Count(60); break;//6
-                case "SPELL3": _attackMode = AttackMode.SPELL3;_shootnum=0; break;//7
+                case "SPELL4": _attackMode = AttackMode.SPELL4;nextSPELL="NORMAL2"; break;//3
+                // case "SPELL5": _attackMode = AttackMode.SPELL5;nextSPELL="NORMAL2"; break;//4
+                case "NORMAL2": _attackMode = AttackMode.NORMAL2;nextSPELL="SPELL2"; break;//4
+                case "SPELL2": _attackMode = AttackMode.SPELL2;nextSPELL="SPELL3";subGameManager.Count(60); break;//5
+                case "SPELL3": _attackMode = AttackMode.SPELL3;_shootnum=0; break;//6
             }
     }
     protected override void Attack()
@@ -428,7 +459,7 @@ public class BOSSB : BOSS
             _hp-=_Mhp/7;
             _slider.BeInjured(_Mhp/7);
             _PhaseHP=0;
-            _moveMode = MoveMode.M7;
+            _moveMode = MoveMode.M6;
             StartCoroutine(SpellChange());
             return;
         }

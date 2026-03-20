@@ -45,7 +45,6 @@ public class middlebossB : Enemy
     {
         PlayBullet=false;
         TARGET=Instantiate(TARGETobject);
-        Line=Instantiate(Lineobject);
         DIFFICULTYcheak();
         _bulletdistance=3;
         _BulletCount=0;
@@ -288,6 +287,8 @@ public class middlebossB : Enemy
         if(_hp<=0)
         {
             _attackMode=AttackMode.A;
+            StopCoroutine(BEAM());
+            Destroy(gameObject);
             Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
             linerenderscript.STOPline();
             return;
@@ -307,6 +308,7 @@ public class middlebossB : Enemy
     }
     private IEnumerator BEAM()
     {
+        Line=Instantiate(Lineobject);
         TARGET.transform.position=gameObject.transform.position;
         Linerenderscript linerenderscript=Line.GetComponent<Linerenderscript>();
         StartCoroutine(linerenderscript.CircleLine(_beemNum,_beemAngle,1));

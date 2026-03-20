@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements.Experimental;
@@ -7,8 +8,11 @@ using UnityEngine.UIElements.Experimental;
 public class Slider : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _BOSS;
+    private GameObject[] _BOSS;
+    private GameObject boss;
     private BOSS _boss;
+    [SerializeField]
+    private Difficulty _difficulty;
     // 体力ゲージ（表面の常に見える部分）
     [SerializeField] private GameObject _gauge;
     // 猶予ゲージ（体力が減ったとき一瞬見える部分）
@@ -21,9 +25,29 @@ public class Slider : MonoBehaviour
     Rigidbody2D _rigid;
     void Start()
     {
-        _boss = _BOSS.GetComponent<BOSS>();
+                if(_difficulty.StageNum==1)
+        {
+            boss=_BOSS[1];
+        }
+        _boss = boss.GetComponent<BOSS>();
         _HP = _boss.GetHp();
-        // スプライトの幅を最大HPで割ってHP1あたりの幅を”_HP1”に入れておく
+        _HP1 = _gauge.GetComponent<RectTransform>().sizeDelta.x / _HP;
+        _rigid = GetComponent<Rigidbody2D>();
+        // boss=_BOSS[0];
+        // _boss = boss.GetComponent<BOSS>();
+        // _HP = _boss.GetHp();
+        // // スプライトの幅を最大HPで割ってHP1あたりの幅を”_HP1”に入れておく
+        // _HP1 = _gauge.GetComponent<RectTransform>().sizeDelta.x / _HP;
+        // _rigid = GetComponent<Rigidbody2D>();
+    }
+    public void START()
+    {
+        if(_difficulty.StageNum==1)
+        {
+            boss=_BOSS[1];
+        }
+        _boss = boss.GetComponent<BOSS>();
+        _HP = _boss.GetHp();
         _HP1 = _gauge.GetComponent<RectTransform>().sizeDelta.x / _HP;
         _rigid = GetComponent<Rigidbody2D>();
     }

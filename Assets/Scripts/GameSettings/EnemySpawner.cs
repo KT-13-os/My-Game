@@ -37,7 +37,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField, Header("生成時間HARD")]
     private float[] _HARDspawnTimes;
     [SerializeField, Header("BOSS")]
-    private GameObject _Boss;
+    private GameObject[] _Boss;
+    private GameObject boss;
     [SerializeField, Header("スライダー")]
     private GameObject slider;
     [SerializeField, Header("中ボスの出る番号")]
@@ -89,9 +90,7 @@ public class EnemySpawner : MonoBehaviour
         }
         _OLDobjects=null;
         _playerScripts = _player.GetComponent<PlayerScripts>();
-        _Not = false;
         _GameManager = _gamemanager.GetComponent<GameManager>();
-        _boss = _Boss.GetComponent<BOSS>();
         _slider = slider.GetComponent<Slider>();
     }
     public void START()
@@ -103,8 +102,17 @@ public class EnemySpawner : MonoBehaviour
         _spawnNum = 0;
         _Count = 0;
         if(_difficulty.DIFFICULTY=="Tutorial")return;
-        _Boss.transform.position=new Vector3(-3,8,0);
-        _Boss.SetActive(false);
+        _Not=false;
+        if(_difficulty.StageNum==0)
+        {
+            boss=_Boss[0];
+        }
+        else if(_difficulty.StageNum==1)
+        {
+            boss=_Boss[1];
+        }
+        _boss = boss.GetComponent<BOSS>();
+        // _boss.transform.position=new Vector3(-3,8,0);
         slider.SetActive(false);
     }
     public void StageChange()
@@ -173,7 +181,8 @@ public class EnemySpawner : MonoBehaviour
             if (_Count < 6) return;
             _boss.AttackOK();
             _slider.AttackOk();
-            if (_Count >= 6.01f) return;
+            _Count=0;
+            _Not=true;
             _GameManager.ChangeBackGlound(0);
             _difficulty.Phase=1;
             return;
@@ -201,7 +210,8 @@ public class EnemySpawner : MonoBehaviour
             if (_Count < 2) return;
             _boss.AttackOK();
             _slider.AttackOk();
-            if (_Count >= 2.01f) return;
+            _Count=0;
+            _Not=true;
             _GameManager.ChangeBackGlound(0);
             _difficulty.Phase=1;
             return;
@@ -230,7 +240,8 @@ public class EnemySpawner : MonoBehaviour
             if (_Count < 2) return;
             _boss.AttackOK();
             _slider.AttackOk();
-            if (_Count >= 2.01f) return;
+            _Count=0;
+            _Not=true;
             _GameManager.ChangeBackGlound(0);
             _difficulty.Phase=1;
             return;
@@ -259,7 +270,8 @@ public class EnemySpawner : MonoBehaviour
             if (_Count < 2) return;
             _boss.AttackOK();
             _slider.AttackOk();
-            if (_Count >= 2.01f) return;
+            _Count=0;
+            _Not=true;
             _GameManager.ChangeBackGlound(0);
             _difficulty.Phase=1;
             return;

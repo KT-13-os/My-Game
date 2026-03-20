@@ -66,6 +66,7 @@ public class BOSSA : BOSS
     private MoveMode _moveMode;
     protected override void Initialize()
     {
+        _phaseCount=0;
         _score = 100000;
         _mutekiCount = 0;
         _bTime = 0.4f;
@@ -433,11 +434,13 @@ public class BOSSA : BOSS
     {
         if(subGameManager.GetCount()<40)
         {
-            if(_phaseCount>=1)return;
-            _phaseCount++;
+            if(_phaseCount<1)
+            {
             ChangePhase(1);
+            _phaseCount++;
+            }
         }
-        else if(subGameManager.GetCount()<=0)
+        if(subGameManager.GetCount()<=0)
         {
             ChangePhase(10);
         return;
@@ -542,28 +545,27 @@ public class BOSSA : BOSS
             }
         }
     }
-public void ChangePhase(int INT)
+private void ChangePhase(int INT)
     {
         if (INT == 0)
         {
-            _attackMode =AttackMode.A4;
+            _attackMode=AttackMode.A4;
             MARUconfig(3, 6, 0.25f, 0.3f, 12, 5,2,2);
             _E = 4f;
             _G = 1.5f;
             _H = 1f;
         }
-        else if (INT == 1)
+        if (INT == 1)
         {
-            _attackMode =AttackMode.A4;
             MARUconfig(5, 5, 0.2f, 0.42f, 4, 6,5,5);
             _C = 3.6f;
             _E = 3f;
             _G = 1.5f;
             _H = 1f;
         }
-        else if(INT==10)
+        if(INT==10)
         {
-            _attackMode = AttackMode.A;
+            _attackMode=AttackMode.A;
             _attack = false;
             gamemanager.Score(_score);
             _slider.DESTROY();

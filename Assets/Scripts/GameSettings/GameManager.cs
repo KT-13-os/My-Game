@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
     private MessageText messageText;
     [SerializeField, Header("Player")]
     private GameObject _player;
+    [SerializeField, Header("HPguege")]
+    private GameObject _slider;
+    private Slider slider;
     private PlayerScripts _playerScripts;
     [SerializeField, Header("遅くなる時間")]
     private float _deadEffectTimeScale;
@@ -140,6 +143,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        _Sdifficulty.StageNum=0;
         A = true;
     }
     void Start()
@@ -151,12 +155,12 @@ public class GameManager : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "MAIN")
         {
         _EnemySpawner = _enemyspowner.GetComponent<EnemySpawner>();
+        slider=_slider.GetComponent<Slider>();
         }
         // _BGMSource.outputAudioMixerGroup = _BGMGroup;
         // _SESource.outputAudioMixerGroup = _SEGroup;
         // _audioMixer.SetFloat("VolumeParam_BGM",_BGMvalue);
         // _audioMixer.SetFloat("VolumeParam_SE",_SEvalue);
-        _Sdifficulty.StageNum=0;
         _nscore = 0;
         _npower = 1;
         _glaze = 0;
@@ -238,6 +242,7 @@ public class GameManager : MonoBehaviour
         _scoretext.text="0";
         _Glazetext.text="0";
         _powertext.text="1";
+        slider.START();
         ChangeBackGlound(1);
     }
     public void summonA()
@@ -361,6 +366,11 @@ public class GameManager : MonoBehaviour
     public void MAINButton()
     {
         SceneManager.LoadScene("MAIN");
+        Time.timeScale = 1;
+    }
+    public void TESTWORLDButton()
+    {
+        SceneManager.LoadScene("TESTWORLD");
         Time.timeScale = 1;
     }
     public void MAIN2Button()
